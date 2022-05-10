@@ -22,7 +22,14 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
   }
 
   public double[][] data() {
-    return new double[0][];
+    int m = this.shape().rows;
+    int n = this.shape().columns;
+    double[][] res = new double[m][n];
+
+    for (int i = 0; i < bound; i++)
+      res[n - i - 1][i] = values[i];
+
+    return res;
   }
 
   public double normOne() {
@@ -45,10 +52,6 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix plusFull(FullMatrix other) {
     return null;
   }
@@ -57,15 +60,7 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix lHTimesFull(FullMatrix other) {
     return null;
   }
 

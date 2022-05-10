@@ -36,8 +36,6 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix rHMinusSparse(SparseMatrix other);
 
-  IDoubleMatrix rHTimesSparse(SparseMatrix other);
-
   IDoubleMatrix plusFull(FullMatrix other);
 
   IDoubleMatrix rHMinusFull(FullMatrix other);
@@ -45,8 +43,6 @@ public interface IDoubleMatrix {
   IDoubleMatrix rHTimesFull(FullMatrix other);
 
   IDoubleMatrix lHMinusFull(FullMatrix other);
-
-  IDoubleMatrix lHTimesFull(FullMatrix other);
 
   double getColumn(int column);
 

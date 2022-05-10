@@ -31,10 +31,6 @@ public class RowMatrix extends OneTableMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    return null;
-  }
-
   @Override
   public IDoubleMatrix plusFull(FullMatrix other) {
     return null;
@@ -45,16 +41,7 @@ public class RowMatrix extends OneTableMatrix {
     return null;
   }
 
-  @Override
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix lHTimesFull(FullMatrix other) {
     return null;
   }
 

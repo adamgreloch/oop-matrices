@@ -21,10 +21,6 @@ public class IrregularMatrix extends SparseMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix times(double scalar) {
     return null;
   }
@@ -58,10 +54,6 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
     return null;
   }
 

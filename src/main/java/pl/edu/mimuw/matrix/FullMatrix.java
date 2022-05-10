@@ -1,6 +1,6 @@
 package pl.edu.mimuw.matrix;
 
-public class FullMatrix implements IDoubleMatrix {
+public class FullMatrix extends DoubleMatrix {
   private final double[][] values;
   private final Shape shape;
 
@@ -14,11 +14,6 @@ public class FullMatrix implements IDoubleMatrix {
     for (int i = 0; i < table.length; i++)
       res[i] = table[i].clone();
     return res;
-  }
-
-  public IDoubleMatrix times(IDoubleMatrix other) {
-    Shape.assertProduct(this, other);
-    return other.rHTimesFull(this);
   }
 
   public IDoubleMatrix times(double scalar) {
@@ -99,10 +94,6 @@ public class FullMatrix implements IDoubleMatrix {
     return other.lHMinusFull(this);
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    return other.lHTimesFull(this);
-  }
-
   public IDoubleMatrix plusFull(FullMatrix other) {
     assert this.shape.equals(other.shape);
     double[][] res = new double[this.values.length][];
@@ -123,25 +114,8 @@ public class FullMatrix implements IDoubleMatrix {
     return new FullMatrix(res);
   }
 
-  @Override
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
-    Shape.assertProduct(other, this);
-    double[][] res = new double[this.values.length][];
-
-    for (int i = 0; i < this.shape().rows; i++)
-      for (int j = 0; j < this.shape().columns; j++)
-        for (int k = 0; k < this.shape().columns; k++)
-          res[i][j] = other.get(i, k) * this.get(k, j);
-
-    return new FullMatrix(res);
-  }
-
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
     return other.rHMinusFull(this);
-  }
-
-  public IDoubleMatrix lHTimesFull(FullMatrix other) {
-    return other.rHTimesFull(this);
   }
 
   public double getColumn(int column) {

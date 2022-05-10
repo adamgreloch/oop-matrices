@@ -16,9 +16,10 @@ public class ConstantMatrix extends SparseMatrix {
     return other.minus(this.value);
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    /**
-     * Product of ConstantMatrix times any SparseMatrix is a ColumnMatrix
+  @Override
+  public IDoubleMatrix times(IDoubleMatrix other) {
+    /*
+      Product of ConstantMatrix times any IDoubleMatrix is a ColumnMatrix
      */
     double[] rows = new double[this.shape().columns];
     for (int i = 0; i < this.shape().columns; i++)
@@ -36,16 +37,7 @@ public class ConstantMatrix extends SparseMatrix {
     return null;
   }
 
-  @Override
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix lHTimesFull(FullMatrix other) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 package pl.edu.mimuw.matrix;
 
-public abstract class SparseMatrix implements IDoubleMatrix {
+public abstract class SparseMatrix extends DoubleMatrix {
   private final double dominantValue;
   private final Shape shape;
 
@@ -12,8 +12,6 @@ public abstract class SparseMatrix implements IDoubleMatrix {
   public SparseMatrix(Shape shape) {
     this(shape, 0);
   }
-
-  public IDoubleMatrix times(IDoubleMatrix other) { return other.rHTimesSparse(this); }
 
   public abstract IDoubleMatrix times(double scalar);
 

@@ -22,19 +22,11 @@ public class ColumnMatrix extends OneTableMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    return null;
-  }
-
   public IDoubleMatrix plusFull(FullMatrix other) {
     return null;
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
     return null;
   }
 
