@@ -8,6 +8,10 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix plus(IDoubleMatrix other);
 
+  /**
+   * Performs scalar to matrix addition following a convention chosen by Wolfram
+   * i.e. matrix + constant matrix with all cells of scalar value.
+   */
   IDoubleMatrix plus(double scalar);
 
   IDoubleMatrix minus(IDoubleMatrix other);
@@ -27,4 +31,14 @@ public interface IDoubleMatrix {
   String toString();
 
   Shape shape();
+
+  IDoubleMatrix plusSparse(SparseMatrix other);
+
+  IDoubleMatrix rHMinusSparse(SparseMatrix other);
+
+  IDoubleMatrix rHTimesSparse(SparseMatrix other);
+
+  double getColumn(int column);
+
+  double getRow(int row);
 }

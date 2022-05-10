@@ -30,6 +30,6 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix zero(Shape shape) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    return new ConstantMatrix(shape, 0);
   }
 }

@@ -40,4 +40,9 @@ public final class Shape {
     assert rows > 0;
     return new Shape(rows, columns);
   }
+
+  public static Shape product(IDoubleMatrix A, IDoubleMatrix B) {
+    assert A.shape().columns == B.shape().rows;
+    return new Shape(A.shape().rows, B.shape().columns);
+  }
 }
