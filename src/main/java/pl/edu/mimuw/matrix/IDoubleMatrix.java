@@ -44,7 +44,15 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix rHTimesFull(FullMatrix other);
 
+  IDoubleMatrix lHMinusFull(FullMatrix other);
+
+  IDoubleMatrix lHTimesFull(FullMatrix other);
+
   double getColumn(int column);
 
   double getRow(int row);
+
+  double getAbsColumn(int column);
+
+  double getAbsRow(int row);
 }

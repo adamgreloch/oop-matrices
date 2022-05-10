@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class IrregularMatrix extends SparseMatrix {
-  private HashSet<MatrixCellValue> values;
-  private Shape shape;
+  private final HashSet<MatrixCellValue> values;
+  private final Shape shape;
 
   public IrregularMatrix(Shape shape, MatrixCellValue... values) {
     super(shape);

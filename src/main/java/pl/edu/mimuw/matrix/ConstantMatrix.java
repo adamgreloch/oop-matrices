@@ -1,7 +1,7 @@
 package pl.edu.mimuw.matrix;
 
 public class ConstantMatrix extends SparseMatrix {
-  private double value;
+  private final double value;
 
   public ConstantMatrix(Shape shape, double value) {
     super(shape);
@@ -41,12 +41,24 @@ public class ConstantMatrix extends SparseMatrix {
     return null;
   }
 
+  public IDoubleMatrix lHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  public IDoubleMatrix lHTimesFull(FullMatrix other) {
+    return null;
+  }
+
   public IDoubleMatrix times(double scalar) {
     return new ConstantMatrix(this.shape(), value * scalar);
   }
 
   public IDoubleMatrix plus(double scalar) {
     return new ConstantMatrix(this.shape(), value + scalar);
+  }
+
+  public IDoubleMatrix minus(IDoubleMatrix other) {
+    return null;
   }
 
   public double get(int row, int column) {
@@ -103,7 +115,7 @@ public class ConstantMatrix extends SparseMatrix {
       for (int j = 0; j < columns; j++) {
         if (j == 0 || j == columns - 1)
           res.append(this.value);
-        if (j == (columns - 1)/2)
+        if (j == (columns - 1) / 2)
           res.append("...");
         res.append("   ");
       }

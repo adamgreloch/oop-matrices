@@ -5,6 +5,10 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
     super(shape, dominantValue, antiDiagonalValues, Math.min(shape.rows, shape.columns));
   }
 
+  public IDoubleMatrix minus(IDoubleMatrix other) {
+    return null;
+  }
+
   public double get(int row, int column) {
     this.assertInMatrix(row, column);
     if (row == column)
@@ -57,11 +61,27 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
     return null;
   }
 
+  public IDoubleMatrix lHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  public IDoubleMatrix lHTimesFull(FullMatrix other) {
+    return null;
+  }
+
   public double getColumn(int column) {
     return 0;
   }
 
   public double getRow(int row) {
+    return 0;
+  }
+
+  public double getAbsColumn(int column) {
+    return 0;
+  }
+
+  public double getAbsRow(int row) {
     return 0;
   }
 

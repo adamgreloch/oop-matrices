@@ -8,7 +8,7 @@ public class Main {
 
   public static void main(String[] args) {
     // Tu trzeba wpisać kod testujący toString dla poszczególnych macierzy i wyników operacji
-    IDoubleMatrix xd = DoubleMatrixFactory.zero(Shape.matrix(5,5));
+    IDoubleMatrix xd = DoubleMatrixFactory.zero(Shape.matrix(5, 5));
     System.out.println(xd);
   }
 }

@@ -5,7 +5,7 @@ public class DoubleMatrixFactory {
   private DoubleMatrixFactory() {
   }
 
-  public static IDoubleMatrix sparse(Shape shape, MatrixCellValue... values){
+  public static IDoubleMatrix sparse(Shape shape, MatrixCellValue... values) {
     return null; // Tu trzeba wpisać właściwą instrukcję
   }
 
@@ -27,7 +27,7 @@ public class DoubleMatrixFactory {
     return new AntiDiagonalMatrix(Shape.matrix(n, n), 0, antiDiagonalValues);
   }
 
-  public static IDoubleMatrix vector(double... values){
+  public static IDoubleMatrix vector(double... values) {
     return null; // Tu trzeba wpisać właściwą instrukcję
   }
 
