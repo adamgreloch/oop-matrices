@@ -10,19 +10,21 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix full(double[][] values) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    return new FullMatrix(values);
   }
 
   public static IDoubleMatrix identity(int size) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    return new DiagonalMatrix(Shape.matrix(size, size), 0, 1, size);
   }
 
   public static IDoubleMatrix diagonal(double... diagonalValues) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    int n = diagonalValues.length;
+    return new DiagonalMatrix(Shape.matrix(n, n), 0, diagonalValues);
   }
 
   public static IDoubleMatrix antiDiagonal(double... antiDiagonalValues) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    int n = antiDiagonalValues.length;
+    return new AntiDiagonalMatrix(Shape.matrix(n, n), 0, antiDiagonalValues);
   }
 
   public static IDoubleMatrix vector(double... values){

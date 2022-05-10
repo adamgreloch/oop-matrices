@@ -38,6 +38,12 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix rHTimesSparse(SparseMatrix other);
 
+  IDoubleMatrix plusFull(FullMatrix other);
+
+  IDoubleMatrix rHMinusFull(FullMatrix other);
+
+  IDoubleMatrix rHTimesFull(FullMatrix other);
+
   double getColumn(int column);
 
   double getRow(int row);

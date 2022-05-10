@@ -1,12 +1,17 @@
 package pl.edu.mimuw.matrix;
 
-public class ColumnMatrix extends OneTableMatrix {
-  public ColumnMatrix(Shape shape, double[] diagonalValues) {
-    super(shape, 0, diagonalValues, shape.rows);
+public class RowMatrix extends OneTableMatrix {
+
+  public RowMatrix(Shape shape, double[] diagonalValues) {
+    super(shape, 0, diagonalValues, shape.columns);
   }
 
   public double get(int row, int column) {
-    return this.values[row];
+    return this.values[column];
+  }
+
+  public RowMatrix newMatrix(double[] newValues) {
+    return new RowMatrix(this.shape(), newValues);
   }
 
   public double[][] data() {
@@ -26,14 +31,17 @@ public class ColumnMatrix extends OneTableMatrix {
     return null;
   }
 
+  @Override
   public IDoubleMatrix plusFull(FullMatrix other) {
     return null;
   }
 
+  @Override
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     return null;
   }
 
+  @Override
   public IDoubleMatrix rHTimesFull(FullMatrix other) {
     return null;
   }
@@ -47,11 +55,6 @@ public class ColumnMatrix extends OneTableMatrix {
   }
 
   public String sparseType() {
-    return "column";
-  }
-
-  @Override
-  public OneTableMatrix newMatrix(double[] newValues) {
-    return new ColumnMatrix(this.shape(), newValues);
+    return "row";
   }
 }

@@ -64,4 +64,10 @@ public abstract class SparseMatrix implements IDoubleMatrix {
   public double dominantValue() {
     return dominantValue;
   }
+
+  public abstract String sparseType();
+
+  public boolean typeEquals(SparseMatrix other) {
+    return this.sparseType().equals(other.sparseType());
+  }
 }

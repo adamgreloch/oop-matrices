@@ -1,17 +1,36 @@
 package pl.edu.mimuw.matrix;
 
-public class ColumnMatrix extends OneTableMatrix {
-  public ColumnMatrix(Shape shape, double[] diagonalValues) {
-    super(shape, 0, diagonalValues, shape.rows);
+public class AntiDiagonalMatrix extends OneTableMatrix {
+  public AntiDiagonalMatrix(Shape shape, double dominantValue, double[] antiDiagonalValues) {
+    super(shape, dominantValue, antiDiagonalValues, Math.min(shape.rows, shape.columns));
   }
 
   public double get(int row, int column) {
-    return this.values[row];
+    this.assertInMatrix(row, column);
+    if (row == column)
+      return values[row];
+    else
+      return this.dominantValue();
+  }
+
+  public OneTableMatrix newMatrix(double[] newValues) {
+    return new AntiDiagonalMatrix(this.shape(), this.dominantValue(), newValues);
   }
 
   public double[][] data() {
-    // TODO
     return new double[0][];
+  }
+
+  public double normOne() {
+    return 0;
+  }
+
+  public double normInfinity() {
+    return 0;
+  }
+
+  public double frobeniusNorm() {
+    return 0;
   }
 
   public IDoubleMatrix plusSparse(SparseMatrix other) {
@@ -47,11 +66,6 @@ public class ColumnMatrix extends OneTableMatrix {
   }
 
   public String sparseType() {
-    return "column";
-  }
-
-  @Override
-  public OneTableMatrix newMatrix(double[] newValues) {
-    return new ColumnMatrix(this.shape(), newValues);
+    return "antiDiagonal";
   }
 }

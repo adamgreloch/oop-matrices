@@ -26,6 +26,21 @@ public class ConstantMatrix extends SparseMatrix {
     return new ColumnMatrix(Shape.product(other, this), rows);
   }
 
+  @Override
+  public IDoubleMatrix plusFull(FullMatrix other) {
+    return null;
+  }
+
+  @Override
+  public IDoubleMatrix rHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  @Override
+  public IDoubleMatrix rHTimesFull(FullMatrix other) {
+    return null;
+  }
+
   public IDoubleMatrix times(double scalar) {
     return new ConstantMatrix(this.shape(), value * scalar);
   }
@@ -65,8 +80,13 @@ public class ConstantMatrix extends SparseMatrix {
     return value * shape().columns;
   }
 
+  public String sparseType() {
+    return "constant";
+  }
+
   @Override
   public String toString() {
+    // TODO deredund
     int columns = this.shape().columns;
     StringBuilder res = new StringBuilder();
     if (this.shape().rows < 3) {

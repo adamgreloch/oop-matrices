@@ -1,29 +1,25 @@
 package pl.edu.mimuw.matrix;
 
-import java.util.Arrays;
-
-public class DiagonalMatrix extends SparseMatrix {
-  private double[] diagonalValues;
+public class DiagonalMatrix extends OneTableMatrix {
 
   public DiagonalMatrix(Shape shape, double dominantValue, double[] diagonalValues) {
-    super(shape, dominantValue);
-    this.diagonalValues = Arrays.copyOf(diagonalValues, diagonalValues.length);
+    super(shape, dominantValue, diagonalValues, Math.min(shape.rows, shape.columns));
   }
 
-  public IDoubleMatrix times(double scalar) {
-    return null;
-  }
-
-  public IDoubleMatrix plus(double scalar) {
-    return null;
+  public DiagonalMatrix(Shape shape, double dominantValue, double diagonalValue, int bound) {
+    super(shape, dominantValue, diagonalValue, bound);
   }
 
   public double get(int row, int column) {
     this.assertInMatrix(row, column);
     if (row == column)
-      return diagonalValues[row];
+      return values[row];
     else
       return this.dominantValue();
+  }
+
+  public OneTableMatrix newMatrix(double[] newValues) {
+    return new DiagonalMatrix(this.shape(), this.dominantValue(), newValues);
   }
 
   public double[][] data() {
@@ -54,11 +50,30 @@ public class DiagonalMatrix extends SparseMatrix {
     return null;
   }
 
+  @Override
+  public IDoubleMatrix plusFull(FullMatrix other) {
+    return null;
+  }
+
+  @Override
+  public IDoubleMatrix rHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  @Override
+  public IDoubleMatrix rHTimesFull(FullMatrix other) {
+    return null;
+  }
+
   public double getColumn(int column) {
     return 0;
   }
 
   public double getRow(int row) {
     return 0;
+  }
+
+  public String sparseType() {
+    return "diagonal";
   }
 }

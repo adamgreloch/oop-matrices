@@ -42,7 +42,11 @@ public final class Shape {
   }
 
   public static Shape product(IDoubleMatrix A, IDoubleMatrix B) {
-    assert A.shape().columns == B.shape().rows;
+    Shape.assertProduct(A, B);
     return new Shape(A.shape().rows, B.shape().columns);
+  }
+
+  public static void assertProduct(IDoubleMatrix A, IDoubleMatrix B) {
+    assert A.shape().columns == B.shape().rows;
   }
 }
