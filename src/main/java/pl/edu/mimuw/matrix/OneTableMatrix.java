@@ -6,14 +6,14 @@ public abstract class OneTableMatrix extends SparseMatrix {
   protected final double[] values;
   protected final int bound;
 
-  public OneTableMatrix(Shape shape, double dominantValue, double[] values, int bound) {
-    super(shape, dominantValue);
+  public OneTableMatrix(Shape shape, double[] values, int bound) {
+    super(shape);
     this.values = Arrays.copyOf(values, values.length);
     this.bound = bound;
   }
 
-  public OneTableMatrix(Shape shape, double dominantValue, double value, int bound) {
-    super(shape, dominantValue);
+  public OneTableMatrix(Shape shape, double value, int bound) {
+    super(shape);
     this.values = new double[bound];
     this.bound = bound;
     Arrays.fill(this.values, value);

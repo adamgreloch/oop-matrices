@@ -2,8 +2,8 @@ package pl.edu.mimuw.matrix;
 
 public class AntiDiagonalMatrix extends OneTableMatrix {
 
-  public AntiDiagonalMatrix(Shape shape, double dominantValue, double[] antiDiagonalValues) {
-    super(shape, dominantValue, antiDiagonalValues, Math.min(shape.rows, shape.columns));
+  public AntiDiagonalMatrix(Shape shape, double[] antiDiagonalValues) {
+    super(shape, antiDiagonalValues, Math.min(shape.rows, shape.columns));
   }
 
   public double get(int row, int column) {
@@ -11,11 +11,11 @@ public class AntiDiagonalMatrix extends OneTableMatrix {
     if (row == column)
       return values[row];
     else
-      return this.dominantValue();
+      return 0;
   }
 
   public OneTableMatrix newMatrix(double[] newValues) {
-    return new AntiDiagonalMatrix(this.shape(), this.dominantValue(), newValues);
+    return new AntiDiagonalMatrix(this.shape(), newValues);
   }
 
   public double[][] data() {

@@ -3,7 +3,7 @@ package pl.edu.mimuw.matrix;
 public class RowMatrix extends OneTableMatrix {
 
   public RowMatrix(Shape shape, double[] diagonalValues) {
-    super(shape, 0, diagonalValues, shape.columns);
+    super(shape, diagonalValues, shape.columns);
   }
 
   public double get(int row, int column) {

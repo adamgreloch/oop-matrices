@@ -2,12 +2,12 @@ package pl.edu.mimuw.matrix;
 
 public class DiagonalMatrix extends OneTableMatrix {
 
-  public DiagonalMatrix(Shape shape, double dominantValue, double[] diagonalValues) {
-    super(shape, dominantValue, diagonalValues, Math.min(shape.rows, shape.columns));
+  public DiagonalMatrix(Shape shape, double[] diagonalValues) {
+    super(shape, diagonalValues, Math.min(shape.rows, shape.columns));
   }
 
-  public DiagonalMatrix(Shape shape, double dominantValue, double diagonalValue, int bound) {
-    super(shape, dominantValue, diagonalValue, bound);
+  public DiagonalMatrix(Shape shape, double diagonalValue, int bound) {
+    super(shape, diagonalValue, bound);
   }
 
   public double get(int row, int column) {
@@ -15,11 +15,11 @@ public class DiagonalMatrix extends OneTableMatrix {
     if (row == column)
       return values[row];
     else
-      return this.dominantValue();
+      return 0;
   }
 
   public OneTableMatrix newMatrix(double[] newValues) {
-    return new DiagonalMatrix(this.shape(), this.dominantValue(), newValues);
+    return new DiagonalMatrix(this.shape(), newValues);
   }
 
   public double[][] data() {
