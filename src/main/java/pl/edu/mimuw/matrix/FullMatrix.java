@@ -97,11 +97,11 @@ public class FullMatrix extends DoubleMatrix {
 
   public IDoubleMatrix plusFull(FullMatrix other) {
     assert this.shape().equals(other.shape());
-    double[][] res = new double[this.values.length][];
+    double[][] res = copy2DTable(this.values);
 
     for (int i = 0; i < this.shape().rows; i++)
       for (int j = 0; j < this.shape().columns; j++)
-        res[i][j] = this.get(i, j) + other.get(i, j);
+        res[i][j] += other.get(i, j);
     return new FullMatrix(res);
   }
 

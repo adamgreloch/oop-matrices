@@ -36,6 +36,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public double get(int row, int column) {
+    this.assertInMatrix(row, column);
     return 0;
   }
 
