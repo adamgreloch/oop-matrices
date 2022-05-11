@@ -40,15 +40,9 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix rHMinusFull(FullMatrix other);
 
-  IDoubleMatrix rHTimesFull(FullMatrix other);
-
   IDoubleMatrix lHMinusFull(FullMatrix other);
 
   double getColumn(int column);
 
   double getRow(int row);
-
-  double getAbsColumn(int column);
-
-  double getAbsRow(int row);
 }

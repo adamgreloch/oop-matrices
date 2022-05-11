@@ -28,11 +28,6 @@ public class ConstantMatrix extends SparseMatrix {
   }
 
   @Override
-  public IDoubleMatrix plusFull(FullMatrix other) {
-    return null;
-  }
-
-  @Override
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     return null;
   }
@@ -47,10 +42,6 @@ public class ConstantMatrix extends SparseMatrix {
 
   public IDoubleMatrix plus(double scalar) {
     return new ConstantMatrix(this.shape(), value + scalar);
-  }
-
-  public IDoubleMatrix minus(IDoubleMatrix other) {
-    return null;
   }
 
   public double get(int row, int column) {

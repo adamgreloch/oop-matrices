@@ -2,17 +2,21 @@ package pl.edu.mimuw.matrix;
 
 public class FullMatrix extends DoubleMatrix {
   private final double[][] values;
-  private final Shape shape;
 
   public FullMatrix(double[][] values) {
-    this.shape = Shape.matrix(values.length, values[0].length);
+    super(Shape.matrix(values.length, values[0].length));
     this.values = copy2DTable(values);
   }
 
   private static double[][] copy2DTable(double[][] table) {
     double[][] res = new double[table.length][];
-    for (int i = 0; i < table.length; i++)
+    int rows = table[0].length;
+
+    for (int i = 0; i < table.length; i++) {
+      assert table[i].length == rows;
       res[i] = table[i].clone();
+    }
+
     return res;
   }
 
@@ -47,6 +51,7 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public double get(int row, int column) {
+    this.assertInMatrix(row, column);
     return this.values[row][column];
   }
 
@@ -82,10 +87,6 @@ public class FullMatrix extends DoubleMatrix {
     return Math.sqrt(frob);
   }
 
-  public Shape shape() {
-    return this.shape;
-  }
-
   public IDoubleMatrix plusSparse(SparseMatrix other) {
     return other.plusFull(this);
   }
@@ -95,7 +96,7 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix plusFull(FullMatrix other) {
-    assert this.shape.equals(other.shape);
+    assert this.shape().equals(other.shape());
     double[][] res = new double[this.values.length][];
 
     for (int i = 0; i < this.shape().rows; i++)
@@ -105,7 +106,7 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    assert this.shape.equals(other.shape);
+    assert this.shape().equals(other.shape());
     double[][] res = new double[this.values.length][];
 
     for (int i = 0; i < this.shape().rows; i++)

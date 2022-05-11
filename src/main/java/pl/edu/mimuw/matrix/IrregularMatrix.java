@@ -5,12 +5,14 @@ import java.util.List;
 
 public class IrregularMatrix extends SparseMatrix {
   private final HashSet<MatrixCellValue> values;
-  private final Shape shape;
 
   public IrregularMatrix(Shape shape, MatrixCellValue... values) {
     super(shape);
+
+    for (MatrixCellValue cellValue : values)
+      shape.assertInShape(cellValue.row, cellValue.column);
+
     this.values = new HashSet<>(List.of(values));
-    this.shape = shape;
   }
 
   public IDoubleMatrix plusFull(FullMatrix other) {
@@ -18,6 +20,10 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  public IDoubleMatrix lHMinusFull(FullMatrix other) {
     return null;
   }
 

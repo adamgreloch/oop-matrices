@@ -6,10 +6,6 @@ public class RowMatrix extends OneTableMatrix {
     super(shape, 0, diagonalValues, shape.columns);
   }
 
-  public IDoubleMatrix minus(IDoubleMatrix other) {
-    return null;
-  }
-
   public double get(int row, int column) {
     return this.values[column];
   }
@@ -28,11 +24,6 @@ public class RowMatrix extends OneTableMatrix {
   }
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
-    return null;
-  }
-
-  @Override
-  public IDoubleMatrix plusFull(FullMatrix other) {
     return null;
   }
 

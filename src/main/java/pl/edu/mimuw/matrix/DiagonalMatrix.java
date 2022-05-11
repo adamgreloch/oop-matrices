@@ -46,22 +46,11 @@ public class DiagonalMatrix extends OneTableMatrix {
     return null;
   }
 
-  public IDoubleMatrix rHTimesSparse(SparseMatrix other) {
-    return null;
-  }
-
-  @Override
-  public IDoubleMatrix plusFull(FullMatrix other) {
-    return null;
-  }
-
-  @Override
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     return null;
   }
 
-  @Override
-  public IDoubleMatrix rHTimesFull(FullMatrix other) {
+  public IDoubleMatrix lHMinusFull(FullMatrix other) {
     return null;
   }
 

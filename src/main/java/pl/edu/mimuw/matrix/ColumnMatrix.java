@@ -6,6 +6,7 @@ public class ColumnMatrix extends OneTableMatrix {
   }
 
   public double get(int row, int column) {
+    this.assertInMatrix(row, column);
     return this.values[row];
   }
 
@@ -27,6 +28,10 @@ public class ColumnMatrix extends OneTableMatrix {
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
+    return null;
+  }
+
+  public IDoubleMatrix lHMinusFull(FullMatrix other) {
     return null;
   }
 

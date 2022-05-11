@@ -2,10 +2,9 @@ package pl.edu.mimuw.matrix;
 
 public abstract class SparseMatrix extends DoubleMatrix {
   private final double dominantValue;
-  private final Shape shape;
 
   public SparseMatrix(Shape shape, double dominantValue) {
-    this.shape = shape;
+    super(shape);
     this.dominantValue = dominantValue;
   }
 
@@ -21,13 +20,11 @@ public abstract class SparseMatrix extends DoubleMatrix {
 
   public abstract IDoubleMatrix plus(double scalar);
 
-  public IDoubleMatrix minus(double scalar) { return this.plus(-scalar); }
-
-  public Shape shape() { return shape; }
-
-  public void assertInMatrix(int row, int column) {
-    this.shape().assertInShape(row, column);
+  public IDoubleMatrix minus(IDoubleMatrix other) {
+    return other.rHMinusSparse(this);
   }
+
+  public IDoubleMatrix minus(double scalar) { return this.plus(-scalar); }
 
   public double dominantValue() {
     return dominantValue;
@@ -37,5 +34,9 @@ public abstract class SparseMatrix extends DoubleMatrix {
 
   public boolean typeEquals(SparseMatrix other) {
     return this.sparseType().equals(other.sparseType());
+  }
+
+  public boolean dominantEquals(SparseMatrix other) {
+    return this.dominantValue() == other.dominantValue();
   }
 }

@@ -6,10 +6,12 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix sparse(Shape shape, MatrixCellValue... values) {
-    return null; // Tu trzeba wpisać właściwą instrukcję
+    // TODO czy ja tu mam wykrywać jakiego typu jest ta macierz?...
+    return new IrregularMatrix(shape, values);
   }
 
   public static IDoubleMatrix full(double[][] values) {
+    assert values != null && values.length > 0;
     return new FullMatrix(values);
   }
 
