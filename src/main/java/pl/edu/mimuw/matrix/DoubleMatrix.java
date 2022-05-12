@@ -29,7 +29,9 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
     return new FullMatrix(res);
   }
 
-  public Shape shape() { return this.shape; }
+  public Shape shape() {
+    return this.shape;
+  }
 
   public void assertInMatrix(int row, int column) {
     this.shape().assertInShape(row, column);

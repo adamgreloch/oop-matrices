@@ -1,39 +1,16 @@
 package pl.edu.mimuw.matrix;
 
-public class RowMatrix extends OneTableMatrix {
-
-  public RowMatrix(Shape shape, double[] diagonalValues) {
-    super(shape, diagonalValues, shape.columns);
+public class RowMatrix extends PeriodicTableMatrix {
+  public RowMatrix(Shape shape, double[] rowValues) {
+    super(shape, rowValues);
   }
 
-  public double get(int row, int column) {
-    return this.values[column];
-  }
-
-  public RowMatrix newMatrix(double[] newValues) {
+  public OneTableMatrix newMatrix(double[] newValues) {
     return new RowMatrix(this.shape(), newValues);
   }
 
-  public double[][] data() {
-    // TODO
-    return new double[0][];
-  }
-
-  public IDoubleMatrix plusSparse(SparseMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
-    return null;
-  }
-
-  @Override
-  public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    return null;
-  }
-
-  public IDoubleMatrix lHMinusFull(FullMatrix other) {
-    return null;
+  protected int choose(int row, int column) {
+    return column;
   }
 
   public double getColumn(int column) {

@@ -19,15 +19,6 @@ public abstract class OneTableMatrix extends SparseMatrix {
     Arrays.fill(this.values, value);
   }
 
-  public IDoubleMatrix times(double scalar) {
-    double[] res = Arrays.copyOf(this.values, bound);
-
-    for (int i = 0; i < bound; i++)
-      res[i] *= scalar;
-
-    return this.newMatrix(res);
-  }
-
   public IDoubleMatrix plus(double scalar) {
     double[] res = Arrays.copyOf(this.values, bound);
 
@@ -37,7 +28,44 @@ public abstract class OneTableMatrix extends SparseMatrix {
     return this.newMatrix(res);
   }
 
+  public IDoubleMatrix plusOneTable(OneTableMatrix other) {
+    double[] res = Arrays.copyOf(this.values, bound);
+
+    for (int i = 0; i < bound; i++)
+      res[i] += other.values[i];
+
+    return this.newMatrix(res);
+  }
+
+  public IDoubleMatrix minusOneTable(OneTableMatrix other) {
+    double[] res = Arrays.copyOf(this.values, bound);
+
+    for (int i = 0; i < bound; i++)
+      res[i] -= other.values[i];
+
+    return this.newMatrix(res);
+  }
+
+  public IDoubleMatrix times(double scalar) {
+    double[] res = Arrays.copyOf(this.values, bound);
+
+    for (int i = 0; i < bound; i++)
+      res[i] *= scalar;
+
+    return this.newMatrix(res);
+  }
+
   public abstract OneTableMatrix newMatrix(double[] newValues);
+
+  protected abstract IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isReduction);
+
+  public IDoubleMatrix plusSparse(SparseMatrix other) {
+    return this.arithmeticOperatorSparse(other, false);
+  }
+
+  public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
+    return this.arithmeticOperatorSparse(other, true);
+  }
 
   public double normOne() {
     return 0;

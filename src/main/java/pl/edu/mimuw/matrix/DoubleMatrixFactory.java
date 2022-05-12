@@ -16,12 +16,12 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix identity(int size) {
-    return new DiagonalMatrix(Shape.matrix(size, size),  1, size);
+    return new DiagonalMatrix(Shape.matrix(size, size), 1, size);
   }
 
   public static IDoubleMatrix diagonal(double... diagonalValues) {
     int n = diagonalValues.length;
-    return new DiagonalMatrix(Shape.matrix(n, n),  diagonalValues);
+    return new DiagonalMatrix(Shape.matrix(n, n), diagonalValues);
   }
 
   public static IDoubleMatrix antiDiagonal(double... antiDiagonalValues) {

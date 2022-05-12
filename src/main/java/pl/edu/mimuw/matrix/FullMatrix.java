@@ -30,6 +30,7 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix plus(IDoubleMatrix other) {
+    assert this.shape().equals(other.shape());
     return other.plusFull(this);
   }
 
@@ -43,6 +44,7 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix minus(IDoubleMatrix other) {
+    assert this.shape().equals(other.shape());
     return other.lHMinusFull(this);
   }
 
@@ -72,7 +74,7 @@ public class FullMatrix extends DoubleMatrix {
     double max = 0;
 
     for (int i = 0; i < this.shape().rows; i++)
-        max = Math.max(this.getAbsRow(i), max);
+      max = Math.max(this.getAbsRow(i), max);
 
     return max;
   }
@@ -96,7 +98,6 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix plusFull(FullMatrix other) {
-    assert this.shape().equals(other.shape());
     double[][] res = copy2DTable(this.values);
 
     for (int i = 0; i < this.shape().rows; i++)
@@ -106,7 +107,6 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    assert this.shape().equals(other.shape());
     double[][] res = new double[this.values.length][];
 
     for (int i = 0; i < this.shape().rows; i++)
