@@ -61,7 +61,7 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
     double[][] newValues = other.data();
 
     for (int i = 0; i < bound; i++)
-      newValues[indexRow(i)][i] = newValues[indexRow(i)][i] + this.values[i] * (isReduction ? -1 : 1);
+      newValues[indexRow(i)][i] += this.values[i] * (isReduction ? -1 : 1);
 
     return new FullMatrix(newValues);
   }

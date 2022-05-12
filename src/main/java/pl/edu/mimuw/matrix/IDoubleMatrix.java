@@ -34,6 +34,8 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix plusSparse(SparseMatrix other);
 
+  IDoubleMatrix plusIrregular(IrregularMatrix other);
+
   IDoubleMatrix rHMinusSparse(SparseMatrix other);
 
   IDoubleMatrix plusFull(FullMatrix other);

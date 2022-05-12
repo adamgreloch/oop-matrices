@@ -29,6 +29,10 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
     return new FullMatrix(res);
   }
 
+  public IDoubleMatrix plusIrregular(IrregularMatrix other) {
+    return this.plusSparse(other);
+  }
+
   public Shape shape() {
     return this.shape;
   }

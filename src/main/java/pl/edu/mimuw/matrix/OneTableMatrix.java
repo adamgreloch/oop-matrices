@@ -28,24 +28,6 @@ public abstract class OneTableMatrix extends SparseMatrix {
     return this.newMatrix(res);
   }
 
-  public IDoubleMatrix plusOneTable(OneTableMatrix other) {
-    double[] res = Arrays.copyOf(this.values, bound);
-
-    for (int i = 0; i < bound; i++)
-      res[i] += other.values[i];
-
-    return this.newMatrix(res);
-  }
-
-  public IDoubleMatrix minusOneTable(OneTableMatrix other) {
-    double[] res = Arrays.copyOf(this.values, bound);
-
-    for (int i = 0; i < bound; i++)
-      res[i] -= other.values[i];
-
-    return this.newMatrix(res);
-  }
-
   public IDoubleMatrix times(double scalar) {
     double[] res = Arrays.copyOf(this.values, bound);
 
