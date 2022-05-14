@@ -14,8 +14,8 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
 
   public double get(int row, int column) {
     this.assertInMatrix(row, column);
-    if (row == indexRow(row) && column == indexColumn(column))
-      return values[row];
+    if (column == indexRow(row))
+      return values[indexRow(row)];
     else
       return 0;
   }
@@ -91,7 +91,6 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
   public double getRow(int row) {
     return 0;
   }
-
 
   public abstract String sparseType();
 }
