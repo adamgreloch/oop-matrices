@@ -22,19 +22,19 @@ public class Vector extends OneTableMatrix {
   }
 
   protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction) {
-      double[] newValues = Arrays.copyOf(this.values, bound);
+    double[] newValues = Arrays.copyOf(this.values, bound);
 
-      for (int i = 0; i < bound; i++)
-        newValues[i] = other.get(i, 0) + newValues[i] * (isSubtraction ? -1 : 1);
+    for (int i = 0; i < bound; i++)
+      newValues[i] = other.get(i, 0) + newValues[i] * (isSubtraction ? -1 : 1);
 
-      return this.newMatrix(newValues);
+    return this.newMatrix(newValues);
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     double[][] newValues = other.data();
 
     for (int i = 0; i < bound; i++)
-        newValues[i][0] -= this.values[i];
+      newValues[i][0] -= this.values[i];
 
     return new FullMatrix(newValues);
   }
@@ -43,7 +43,7 @@ public class Vector extends OneTableMatrix {
     double[][] newValues = other.data();
 
     for (int i = 0; i < bound; i++)
-        newValues[i][0] = this.values[i] - newValues[i][0];
+      newValues[i][0] = this.values[i] - newValues[i][0];
 
     return new FullMatrix(newValues);
   }
