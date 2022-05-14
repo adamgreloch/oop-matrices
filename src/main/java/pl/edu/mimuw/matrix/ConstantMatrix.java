@@ -50,7 +50,7 @@ public class ConstantMatrix extends SparseMatrix {
   }
 
   public double[][] data() {
-    return new double[0][];
+    return new double[this.shape().rows][this.shape().columns];
   }
 
   public double normOne() {

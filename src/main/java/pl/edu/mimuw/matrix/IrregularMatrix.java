@@ -91,7 +91,8 @@ public class IrregularMatrix extends SparseMatrix {
   public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
     LinkedList<MatrixCellValue> res = new LinkedList<>(), sum = new LinkedList<>(), rowToAdd = new LinkedList<>();
     LinkedList<LinkedList<MatrixCellValue>> toSum = new LinkedList<>();
-    for (LinkedList<MatrixCellValue> row : other.values.getValuesColRow()) {
+
+    for (LinkedList<MatrixCellValue> row : other.values.getValuesRowCol()) {
       for (MatrixCellValue cell : row) {
         rowToAdd = this.values.getRow(cell.column);
         if (rowToAdd != null)

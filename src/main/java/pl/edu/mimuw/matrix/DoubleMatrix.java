@@ -8,19 +8,28 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
   }
 
   public IDoubleMatrix times(IDoubleMatrix other) {
-    Shape.assertProduct(this, other);
-    double[][] res = new double[this.shape().rows][other.shape().columns];
+    return dotProduct(this, other);
+  }
 
-    for (int i = 0; i < this.shape().rows; i++)
-      for (int j = 0; j < this.shape().columns; j++)
-        for (int k = 0; k < this.shape().columns; k++)
-          res[i][j] = this.get(i, k) * other.get(k, j);
+  private IDoubleMatrix rHTimes(IDoubleMatrix other) {
+    return dotProduct(other, this);
+  }
+
+  private IDoubleMatrix dotProduct(IDoubleMatrix a, IDoubleMatrix b) {
+    Shape.assertProduct(a, b);
+    int m = a.shape().rows, n = b.shape().columns;
+    double[][] res = new double[m][n];
+
+    for (int i = 0; i < m; i++)
+      for (int j = 0; j < n; j++)
+        for (int k = 0; k < a.shape().columns; k++)
+          res[i][j] += a.get(i, k) * b.get(k, j);
 
     return new FullMatrix(res);
   }
 
   public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
-    return other.times(this);
+    return this.rHTimes(other);
   }
 
   public IDoubleMatrix plusFull(FullMatrix other) {

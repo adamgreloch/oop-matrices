@@ -45,7 +45,7 @@ public class FullMatrix extends DoubleMatrix {
 
   public IDoubleMatrix minus(IDoubleMatrix other) {
     assert this.shape().equals(other.shape());
-    return other.lHMinusFull(this);
+    return other.rHMinusFull(this);
   }
 
   public IDoubleMatrix minus(double scalar) {
@@ -107,11 +107,11 @@ public class FullMatrix extends DoubleMatrix {
   }
 
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    double[][] res = new double[this.values.length][];
+    double[][] res = copy2DTable(other.values);
 
     for (int i = 0; i < this.shape().rows; i++)
       for (int j = 0; j < this.shape().columns; j++)
-        res[i][j] = other.get(i, j) - this.get(i, j);
+        res[i][j] -= this.get(i, j);
     return new FullMatrix(res);
   }
 
