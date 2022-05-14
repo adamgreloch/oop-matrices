@@ -89,18 +89,22 @@ public class IrregularMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
-    LinkedList<MatrixCellValue> res = new LinkedList<>();
+    LinkedList<MatrixCellValue> res = new LinkedList<>(), sum = new LinkedList<>(), rowToAdd = new LinkedList<>();
     LinkedList<LinkedList<MatrixCellValue>> toSum = new LinkedList<>();
-    LinkedList<MatrixCellValue> sum = new LinkedList<>();
-
     for (LinkedList<MatrixCellValue> row : other.values.getValuesColRow()) {
-      for (MatrixCellValue cell : row)
-        toSum.add(IrregularValues.multiplyRow(this.values.getRow(cell.column), cell.value));
+      for (MatrixCellValue cell : row) {
+        rowToAdd = this.values.getRow(cell.column);
+        if (rowToAdd != null)
+          toSum.add(IrregularValues.multiplyRow(rowToAdd, cell.value, cell.row));
+      }
       for (LinkedList<MatrixCellValue> element : toSum)
-        IrregularValues.addRows(sum, element);
+        sum = IrregularValues.addRows(sum, element);
+      toSum.clear();
       res.addAll(sum);
       sum.clear();
     }
+
+    res = IrregularValues.mergeCells(res);
 
     return new IrregularMatrix(Shape.product(other, this), res.toArray(MatrixCellValue[]::new));
   }

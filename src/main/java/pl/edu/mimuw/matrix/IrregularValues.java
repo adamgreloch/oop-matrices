@@ -31,7 +31,7 @@ public class IrregularValues {
     int row = -1;
     MatrixCellValue prev = null;
     for (MatrixCellValue value : sorted) {
-      assert value != prev;
+      assert !value.equals(prev);
       if (value.row > row) {
         res.add(new LinkedList<>());
         row++;
@@ -54,7 +54,7 @@ public class IrregularValues {
     int col = -1;
     MatrixCellValue prev = null;
     for (MatrixCellValue value : sorted) {
-      assert value != prev;
+      assert !value.equals(prev);
       if (value.column > col) {
         res.add(new LinkedList<>());
         col++;
@@ -65,7 +65,7 @@ public class IrregularValues {
     return res;
   }
 
-  private MatrixCellValue[] lexicalRowOrder(MatrixCellValue[] values) {
+  private static MatrixCellValue[] lexicalRowOrder(MatrixCellValue[] values) {
     MatrixCellValue[] res = Arrays.copyOf(values, values.length);
 
     Arrays.sort(res, (cell1, cell2) -> {
@@ -79,7 +79,7 @@ public class IrregularValues {
     return res;
   }
 
-  private MatrixCellValue[] lexicalColOrder(MatrixCellValue[] values) {
+  private static MatrixCellValue[] lexicalColOrder(MatrixCellValue[] values) {
     MatrixCellValue[] res = Arrays.copyOf(values, values.length);
 
     Arrays.sort(res, (cell1, cell2) -> {
@@ -120,8 +120,8 @@ public class IrregularValues {
   }
 
   LinkedList<MatrixCellValue> getRow(int index) {
-    for (LinkedList<MatrixCellValue> column : this.valuesColRow)
-      if (column.peek() != null && column.peek().column == index)
+    for (LinkedList<MatrixCellValue> column : this.valuesRowCol)
+      if (column.peek() != null && column.peek().row == index)
         return column;
     return null;
   }
@@ -175,12 +175,32 @@ public class IrregularValues {
     return res;
   }
 
-  public static LinkedList<MatrixCellValue> multiplyRow(LinkedList<MatrixCellValue> row, double scalar) {
+  public static LinkedList<MatrixCellValue> multiplyRow(LinkedList<MatrixCellValue> row, double scalar, int newRow) {
     LinkedList<MatrixCellValue> res = new LinkedList<>();
     for (MatrixCellValue cell : row)
-      res.add(new MatrixCellValue(cell.row, cell.column, cell.value * scalar));
+      res.add(new MatrixCellValue(newRow, cell.column, cell.value * scalar));
 
     return res;
   }
 
+  public static LinkedList<MatrixCellValue> mergeCells(LinkedList<MatrixCellValue> list) {
+    LinkedList<MatrixCellValue> res = new LinkedList<>();
+    MatrixCellValue[] sorted = lexicalRowOrder(list.toArray(MatrixCellValue[]::new));
+    MatrixCellValue prev = null;
+    double sum = 0;
+    for (MatrixCellValue cell : sorted) {
+      if (prev == null)
+        sum = cell.value;
+      else if (cell.row == prev.row && cell.column == prev.column)
+        sum += cell.value;
+      else {
+        res.add(new MatrixCellValue(prev.row, prev.column, sum));
+        sum = cell.value;
+      }
+      prev = cell;
+    }
+    res.add(new MatrixCellValue(prev.row, prev.column, sum));
+
+    return res;
+  }
 }
