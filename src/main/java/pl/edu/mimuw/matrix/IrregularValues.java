@@ -6,8 +6,8 @@ import java.util.List;
 
 public class IrregularValues {
   private final LinkedList<MatrixCellValue> valuesList;
-  private final LinkedList<LinkedList<MatrixCellValue>> valuesRowCol;
-  private final LinkedList<LinkedList<MatrixCellValue>> valuesColRow;
+  private final LinkedList<LinkedList<MatrixCellValue>> valuesAsRows;
+  private final LinkedList<LinkedList<MatrixCellValue>> valuesAsCols;
 
   public IrregularValues(MatrixCellValue... values) {
     this.valuesList = new LinkedList<>(List.of(values));
@@ -15,8 +15,8 @@ public class IrregularValues {
     /* These two structures represent the same matrix, but the order of
     cells is mutually inverted. That way, row-wise write out of cells
     costs approximately the same as its column-wise counterpart. */
-    this.valuesRowCol = initRowCol(values);
-    this.valuesColRow = initColRow(values);
+    this.valuesAsRows = initAsRows(values);
+    this.valuesAsCols = initAsCols(values);
   }
 
   private static MatrixCellValue[] lexicalRowOrder(MatrixCellValue[] values) {
@@ -108,7 +108,8 @@ public class IrregularValues {
       }
       prev = cell;
     }
-    res.add(new MatrixCellValue(prev.row, prev.column, sum));
+    if (prev != null)
+      res.add(new MatrixCellValue(prev.row, prev.column, sum));
 
     return res;
   }
@@ -118,7 +119,7 @@ public class IrregularValues {
    * @return List of lists of MatrixCellValue elements where first list level
    * represents matrix rows and second columns.
    */
-  private LinkedList<LinkedList<MatrixCellValue>> initRowCol(MatrixCellValue[] values) {
+  private LinkedList<LinkedList<MatrixCellValue>> initAsRows(MatrixCellValue[] values) {
     MatrixCellValue[] sorted = lexicalRowOrder(values);
     LinkedList<LinkedList<MatrixCellValue>> res = new LinkedList<>();
     int row = -1;
@@ -140,7 +141,7 @@ public class IrregularValues {
    * @return List of lists of MatrixCellValue elements where first list level
    * represents matrix rows and second columns.
    */
-  private LinkedList<LinkedList<MatrixCellValue>> initColRow(MatrixCellValue[] values) {
+  private LinkedList<LinkedList<MatrixCellValue>> initAsCols(MatrixCellValue[] values) {
     MatrixCellValue[] sorted = lexicalColOrder(values);
     LinkedList<LinkedList<MatrixCellValue>> res = new LinkedList<>();
     int col = -1;
@@ -163,11 +164,11 @@ public class IrregularValues {
    * @return MatrixCellValue in (row, column) or null if such
    * non-zero cell doesn't exist.
    */
-  public MatrixCellValue get(int row, int column) {
-    for (LinkedList<MatrixCellValue> col : valuesRowCol)
-      if (col.peekFirst() != null && col.peekFirst().row == row)
-        for (MatrixCellValue cell : col)
-          if (cell.column == column)
+  public MatrixCellValue get(int i, int j) {
+    for (LinkedList<MatrixCellValue> row : valuesAsRows)
+      if (row.peekFirst() != null && row.peekFirst().row == i)
+        for (MatrixCellValue cell : row)
+          if (cell.column == j)
             return cell;
     return null;
   }
@@ -176,18 +177,18 @@ public class IrregularValues {
     return this.valuesList; // TODO non-copy intended?
   }
 
-  LinkedList<LinkedList<MatrixCellValue>> getValuesRowCol() {
-    return this.valuesRowCol; // TODO non-copy intended?
+  LinkedList<LinkedList<MatrixCellValue>> getValuesAsRows() {
+    return this.valuesAsRows; // TODO non-copy intended?
   }
 
-  LinkedList<LinkedList<MatrixCellValue>> getValuesColRow() {
-    return this.valuesColRow; // TODO non-copy intended?
+  LinkedList<LinkedList<MatrixCellValue>> getValuesAsCols() {
+    return this.valuesAsCols; // TODO non-copy intended?
   }
 
   LinkedList<MatrixCellValue> getRow(int index) {
-    for (LinkedList<MatrixCellValue> column : this.valuesRowCol)
-      if (column.peek() != null && column.peek().row == index)
-        return column;
+    for (LinkedList<MatrixCellValue> row : this.valuesAsRows)
+      if (row.peek() != null && row.peek().row == index)
+        return row;
     return null;
   }
 
@@ -196,8 +197,8 @@ public class IrregularValues {
     for (int i = 0; i < shape.rows; i++)
       res[i] = new double[shape.columns];
 
-    for (LinkedList<MatrixCellValue> col : this.valuesRowCol)
-      for (MatrixCellValue cell : col)
+    for (LinkedList<MatrixCellValue> row : this.valuesAsRows)
+      for (MatrixCellValue cell : row)
         res[cell.row][cell.column] = cell.value;
 
     return res;

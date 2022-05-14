@@ -2,7 +2,7 @@ package pl.edu.mimuw.matrix;
 
 public class RowMatrix extends PeriodicTableMatrix {
   public RowMatrix(Shape shape, double[] rowValues) {
-    super(shape, rowValues);
+    super(shape, rowValues, shape.columns);
   }
 
   public OneTableMatrix newMatrix(double[] newValues) {
@@ -19,6 +19,10 @@ public class RowMatrix extends PeriodicTableMatrix {
 
   public double getRow(int row) {
     return 0;
+  }
+
+  protected int periods() {
+    return shape().rows;
   }
 
   public String matrixType() {

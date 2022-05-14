@@ -33,18 +33,6 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
     return res;
   }
 
-  public double normOne() {
-    return 0;
-  }
-
-  public double normInfinity() {
-    return 0;
-  }
-
-  public double frobeniusNorm() {
-    return 0;
-  }
-
   public abstract int indexRow(int index);
 
   public abstract int indexColumn(int index);
@@ -82,14 +70,6 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
       newValues[indexRow(i)][i] = this.values[i] - newValues[indexRow(i)][i];
 
     return new FullMatrix(newValues);
-  }
-
-  public double getColumn(int column) {
-    return 0;
-  }
-
-  public double getRow(int row) {
-    return 0;
   }
 
   public abstract String matrixType();

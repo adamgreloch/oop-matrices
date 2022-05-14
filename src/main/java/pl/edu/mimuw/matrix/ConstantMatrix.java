@@ -22,8 +22,15 @@ public class ConstantMatrix extends SparseMatrix {
       Product of ConstantMatrix times any IDoubleMatrix is a ColumnMatrix
      */
     double[] rows = new double[this.shape().columns];
-    for (int i = 0; i < this.shape().columns; i++)
-      rows[i] = other.getRow(i) * this.value;
+    double row = 0;
+
+    for (int i = 0; i < this.shape().columns; i++) {
+      for (int j = 0; j < other.shape().columns; j++)
+        row += other.get(i, j);
+      rows[i] = row * this.value;
+      row = 0;
+    }
+
     return new ColumnMatrix(Shape.product(other, this), rows);
   }
 
@@ -37,16 +44,16 @@ public class ConstantMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix times(double scalar) {
-    return new ConstantMatrix(this.shape(), value * scalar);
+    return new ConstantMatrix(this.shape(), this.value * scalar);
   }
 
   public IDoubleMatrix plus(double scalar) {
-    return new ConstantMatrix(this.shape(), value + scalar);
+    return new ConstantMatrix(this.shape(), this.value + scalar);
   }
 
   public double get(int row, int column) {
     this.assertInMatrix(row, column);
-    return value;
+    return this.value;
   }
 
   public double[][] data() {
@@ -54,25 +61,15 @@ public class ConstantMatrix extends SparseMatrix {
   }
 
   public double normOne() {
-    return 0;
+    return Math.abs(this.value);
   }
 
   public double normInfinity() {
-    return 0;
+    return Math.abs(this.value);
   }
 
   public double frobeniusNorm() {
-    return 0;
-  }
-
-  public double getColumn(int column) {
-    this.assertInMatrix(0, column);
-    return value * shape().rows;
-  }
-
-  public double getRow(int row) {
-    this.assertInMatrix(row, 0);
-    return value * shape().columns;
+    return Math.sqrt(Math.pow(this.value, 2) * this.shape().rows * this.shape().columns);
   }
 
   public String matrixType() {

@@ -3,8 +3,8 @@ package pl.edu.mimuw.matrix;
 import java.util.Arrays;
 
 public abstract class PeriodicTableMatrix extends OneTableMatrix {
-  public PeriodicTableMatrix(Shape shape, double[] periodicValues) {
-    super(shape, periodicValues, shape.rows);
+  public PeriodicTableMatrix(Shape shape, double[] periodicValues, int bound) {
+    super(shape, periodicValues, bound);
   }
 
   public double get(int row, int column) {
@@ -67,5 +67,16 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
     return 0;
   }
 
+  protected abstract int periods();
+
   public abstract String matrixType();
+
+  @Override
+  public double frobeniusNorm() {
+    double sum = 0;
+    for (int i = 0; i < bound; i++)
+      sum += Math.pow(this.values[i], 2);
+
+    return Math.sqrt(sum * periods());
+  }
 }

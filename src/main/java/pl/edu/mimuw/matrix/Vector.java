@@ -13,8 +13,10 @@ public class Vector extends OneTableMatrix {
   }
 
   public double[][] data() {
-    // TODO
-    return new double[0][];
+    double[][] res = new double[this.shape().rows][1];
+    for (int i = 0; i < bound; i++)
+      res[i][0] = this.values[i];
+    return res;
   }
 
   public OneTableMatrix newMatrix(double[] newValues) {
@@ -48,15 +50,22 @@ public class Vector extends OneTableMatrix {
     return new FullMatrix(newValues);
   }
 
-  public double getColumn(int column) {
-    return 0;
-  }
-
-  public double getRow(int row) {
-    return 0;
-  }
-
   public String matrixType() {
     return "vector";
+  }
+
+  @Override
+  public double normOne() {
+    double sum = 0;
+    for (int i = 0; i < bound; i++)
+      sum += Math.abs(this.values[i]);
+    return sum;
+  }
+
+  public double frobeniusNorm() {
+    double sum = 0;
+    for (int i = 0; i < bound; i++)
+      sum += Math.pow(this.values[i], 2);
+    return Math.sqrt(sum);
   }
 }

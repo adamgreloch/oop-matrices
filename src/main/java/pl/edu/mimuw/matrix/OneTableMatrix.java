@@ -50,15 +50,20 @@ public abstract class OneTableMatrix extends SparseMatrix {
   }
 
   public double normOne() {
-    return 0;
+    return normInfinity();
   }
 
   public double normInfinity() {
-    return 0;
+    double max = 0;
+    for (int i = 0; i < bound; i++)
+      max = Math.max(max, Math.abs(this.values[i]));
+    return max;
   }
 
   public double frobeniusNorm() {
-    return 0;
+    double sum = 0;
+    for (int i = 0; i < bound; i++)
+      sum += Math.pow(this.values[i], 2);
+    return Math.sqrt(sum);
   }
-
 }

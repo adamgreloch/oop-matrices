@@ -29,7 +29,7 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix vector(double... values) {
-    return new Vector(Shape.matrix(values.length, 1), values); // Tu trzeba wpisać właściwą instrukcję
+    return new Vector(Shape.vector(values.length), values);
   }
 
   public static IDoubleMatrix zero(Shape shape) {

@@ -119,20 +119,6 @@ public class FullMatrix extends DoubleMatrix {
     return other.rHMinusFull(this);
   }
 
-  public double getColumn(int column) {
-    double sum = 0;
-    for (int i = 0; i < this.shape().rows; i++)
-      sum += this.get(i, column);
-    return sum;
-  }
-
-  public double getRow(int row) {
-    double sum = 0;
-    for (int i = 0; i < this.shape().rows; i++)
-      sum += this.get(row, i);
-    return sum;
-  }
-
   public double getAbsColumn(int column) {
     double sum = 0;
     for (int i = 0; i < this.shape().rows; i++)
@@ -142,7 +128,7 @@ public class FullMatrix extends DoubleMatrix {
 
   public double getAbsRow(int row) {
     double sum = 0;
-    for (int i = 0; i < this.shape().rows; i++)
+    for (int i = 0; i < this.shape().columns; i++)
       sum += Math.abs(this.get(row, i));
     return sum;
   }

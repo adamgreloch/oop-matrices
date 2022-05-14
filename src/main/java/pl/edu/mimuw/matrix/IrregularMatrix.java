@@ -71,15 +71,32 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public double normOne() {
-    return 0;
+    double max = 0, sum = 0;
+    for (LinkedList<MatrixCellValue> column : this.values.getValuesAsCols()) {
+      for (MatrixCellValue cell : column)
+        sum += Math.abs(cell.value);
+      max = Math.max(sum, max);
+      sum = 0;
+    }
+    return max;
   }
 
   public double normInfinity() {
-    return 0;
+    double max = 0, sum = 0;
+    for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
+      for (MatrixCellValue cell : row)
+        sum += Math.abs(cell.value);
+      max = Math.max(sum, max);
+      sum = 0;
+    }
+    return max;
   }
 
   public double frobeniusNorm() {
-    return 0;
+    double sum = 0;
+    for (MatrixCellValue cell : this.values.getValuesList())
+      sum += Math.pow(cell.value, 2);
+    return Math.sqrt(sum);
   }
 
   @Override
@@ -90,10 +107,10 @@ public class IrregularMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
-    LinkedList<MatrixCellValue> res = new LinkedList<>(), sum = new LinkedList<>(), rowToAdd = new LinkedList<>();
+    LinkedList<MatrixCellValue> res = new LinkedList<>(), sum = new LinkedList<>(), rowToAdd;
     LinkedList<LinkedList<MatrixCellValue>> toSum = new LinkedList<>();
 
-    for (LinkedList<MatrixCellValue> row : other.values.getValuesRowCol()) {
+    for (LinkedList<MatrixCellValue> row : other.values.getValuesAsRows()) {
       for (MatrixCellValue cell : row) {
         rowToAdd = this.values.getRow(cell.column);
         if (rowToAdd != null)
@@ -124,9 +141,9 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   private IDoubleMatrix arithmeticIrregularOperator(IrregularMatrix other, boolean isLHReduction) {
-    LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesColRow());
+    LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesAsRows());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
-    for (LinkedList<MatrixCellValue> row : this.values.getValuesColRow()) {
+    for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
       if (row.peek() != null && toOperate.peek() != null && toOperate.peek().peek() != null) {
         if (row.peek().row == toOperate.peek().peek().row) {
           if (isLHReduction)
@@ -143,18 +160,6 @@ public class IrregularMatrix extends SparseMatrix {
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
     return other.lHMinusIrregular(this);
-  }
-
-  public double getColumn(int column) {
-    return 0;
-  }
-
-  public double getRow(int row) {
-    return 0;
-  }
-
-  private IrregularValues getValues() {
-    return this.values;
   }
 
   public String matrixType() {

@@ -35,16 +35,4 @@ public final class MatrixCellValue {
   public int hashCode() {
     return Objects.hash(row, column, value);
   }
-
-  public int row() {
-    return this.row;
-  }
-
-  public int column() {
-    return this.column;
-  }
-
-  public double value() {
-    return this.value;
-  }
 }
