@@ -19,6 +19,10 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
     return new FullMatrix(res);
   }
 
+  public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
+    return other.times(this);
+  }
+
   public IDoubleMatrix plusFull(FullMatrix other) {
     double[][] res = this.data();
 
@@ -39,5 +43,9 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
 
   public void assertInMatrix(int row, int column) {
     this.shape().assertInShape(row, column);
+  }
+
+  public boolean typeEquals(IDoubleMatrix other) {
+    return this.matrixType().equals(other.matrixType());
   }
 }

@@ -6,7 +6,6 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix sparse(Shape shape, MatrixCellValue... values) {
-    // TODO czy ja tu mam wykrywać jakiego typu jest ta macierz?...
     return new IrregularMatrix(shape, values);
   }
 

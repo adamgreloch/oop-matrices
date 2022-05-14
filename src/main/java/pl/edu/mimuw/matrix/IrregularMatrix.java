@@ -1,12 +1,10 @@
 package pl.edu.mimuw.matrix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
 
 public class IrregularMatrix extends SparseMatrix {
-  private final ArrayList<MatrixCellValue> valuesList;
-  private final ArrayList<ArrayList<MatrixCellValue>> values;
+  private final IrregularValues values;
 
   public IrregularMatrix(Shape shape, MatrixCellValue... values) {
     super(shape);
@@ -14,40 +12,13 @@ public class IrregularMatrix extends SparseMatrix {
     for (MatrixCellValue cell : values)
       shape.assertInShape(cell.row, cell.column);
 
-    lexicalOrder(values);
-
-    this.valuesList = new ArrayList<>(List.of(values));
-    this.values = new ArrayList<>();
-    this.values.add(new ArrayList<>());
-
-    MatrixCellValue prev = null;
-    int i = 0;
-
-    for (MatrixCellValue cell : values) {
-      if (prev != null && cell.row != prev.row) {
-        this.values.add(new ArrayList<>());
-        i++;
-      }
-      assert cell != prev;
-      this.values.get(i).add(cell);
-      prev = cell;
-    }
-  }
-
-  private void lexicalOrder(MatrixCellValue... values) {
-    Arrays.sort(values, (cell1, cell2) -> {
-      int cmp = Integer.compare(cell1.row, cell2.row);
-      if (cmp == 0)
-        return Integer.compare(cell1.column, cell2.column);
-      else
-        return cmp;
-    });
+    this.values = new IrregularValues(values);
   }
 
   public IDoubleMatrix plusFull(FullMatrix other) {
     double[][] res = other.data();
 
-    for (MatrixCellValue cell : this.valuesList)
+    for (MatrixCellValue cell : this.values.getValuesList())
       res[cell.row][cell.column] += cell.value;
 
     return new FullMatrix(res);
@@ -56,7 +27,7 @@ public class IrregularMatrix extends SparseMatrix {
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     double[][] res = other.data();
 
-    for (MatrixCellValue cell : this.valuesList)
+    for (MatrixCellValue cell : this.values.getValuesList())
       res[cell.row][cell.column] -= cell.value;
 
     return new FullMatrix(res);
@@ -65,7 +36,7 @@ public class IrregularMatrix extends SparseMatrix {
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
     double[][] res = other.data();
 
-    for (MatrixCellValue cell : this.valuesList)
+    for (MatrixCellValue cell : this.values.getValuesList())
       res[cell.row][cell.column] = cell.value - res[cell.row][cell.column];
 
     return new FullMatrix(res);
@@ -82,34 +53,20 @@ public class IrregularMatrix extends SparseMatrix {
   private IDoubleMatrix scalarOperator(double scalar, boolean mode) {
     ArrayList<MatrixCellValue> res = new ArrayList<>();
 
-    for (MatrixCellValue cell : this.valuesList)
+    for (MatrixCellValue cell : this.values.getValuesList())
       res.add(new MatrixCellValue(cell.row, cell.column, mode ? cell.value + scalar : cell.value * scalar));
 
     return new IrregularMatrix(this.shape(), res.toArray(MatrixCellValue[]::new));
   }
 
   public double get(int row, int column) {
-    this.assertInMatrix(row, column);
-    ArrayList<MatrixCellValue> rowCells = this.values.get(row);
-
-    if (rowCells != null)
-      for (MatrixCellValue cell : rowCells)
-        if (cell.column == column)
-          return cell.value;
-
-    return 0;
+    MatrixCellValue res = this.values.get(row, column);
+    if (res == null) return 0;
+    return res.value;
   }
 
   public double[][] data() {
-    double[][] res = new double[this.shape().rows][];
-    for (int i = 0; i < this.shape().rows; i++)
-      res[i] = new double[this.shape().columns];
-
-    for (ArrayList<MatrixCellValue> rows : this.values)
-      for (MatrixCellValue cell : rows)
-        res[cell.row][cell.column] = cell.value;
-
-    return res;
+    return this.values.generateMatrix(this.shape());
   }
 
   public double normOne() {
@@ -124,15 +81,37 @@ public class IrregularMatrix extends SparseMatrix {
     return 0;
   }
 
+  @Override
+  public IDoubleMatrix times(IDoubleMatrix other) {
+    Shape.assertProduct(this, other);
+    return other.rHTimesIrregular(this);
+  }
+
+  @Override
+  public IDoubleMatrix rHTimesIrregular(IrregularMatrix other) {
+    LinkedList<MatrixCellValue> res = new LinkedList<>();
+    LinkedList<LinkedList<MatrixCellValue>> toSum = new LinkedList<>();
+    LinkedList<MatrixCellValue> sum = new LinkedList<>();
+
+    for (LinkedList<MatrixCellValue> row : other.values.getValuesColRow()) {
+      for (MatrixCellValue cell : row)
+        toSum.add(IrregularValues.multiplyRow(this.values.getRow(cell.column), cell.value));
+      for (LinkedList<MatrixCellValue> element : toSum)
+        IrregularValues.addRows(sum, element);
+      res.addAll(sum);
+      sum.clear();
+    }
+
+    return new IrregularMatrix(Shape.product(other, this), res.toArray(MatrixCellValue[]::new));
+  }
+
   public IDoubleMatrix plusSparse(SparseMatrix other) {
     return other.plusIrregular(this);
   }
 
-  @Override
   public IDoubleMatrix plusIrregular(IrregularMatrix other) {
     return null;
   }
-
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
     return null;
@@ -146,7 +125,11 @@ public class IrregularMatrix extends SparseMatrix {
     return 0;
   }
 
-  public String sparseType() {
+  private IrregularValues getValues() {
+    return this.values;
+  }
+
+  public String matrixType() {
     return "irregular";
   }
 }
