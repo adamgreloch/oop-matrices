@@ -75,32 +75,4 @@ public class ConstantMatrix extends SparseMatrix {
   public String matrixType() {
     return "constant";
   }
-
-  @Override
-  public String toString() {
-    // TODO deredund
-    int columns = this.shape().columns;
-    StringBuilder res = new StringBuilder();
-    if (this.shape().rows < 3) {
-      for (int i = 0; i < columns; i++) {
-        res.append(" ");
-        for (int j = 0; j < columns; j++)
-          res.append(this.value).append(" ");
-        res.append("\n");
-      }
-      return res.toString();
-    }
-
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < columns; j++) {
-        if (j == 0 || j == columns - 1)
-          res.append(this.value);
-        if (j == (columns - 1) / 2)
-          res.append("...");
-        res.append("   ");
-      }
-      res.append("\n");
-    }
-    return res.toString();
-  }
 }

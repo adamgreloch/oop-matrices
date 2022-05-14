@@ -13,14 +13,6 @@ public class ColumnMatrix extends PeriodicTableMatrix {
     return row;
   }
 
-  public double getColumn(int column) {
-    return 0;
-  }
-
-  public double getRow(int row) {
-    return 0;
-  }
-
   protected int periods() {
     return shape().columns;
   }

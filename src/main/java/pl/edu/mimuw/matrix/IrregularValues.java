@@ -19,41 +19,19 @@ public class IrregularValues {
     this.valuesAsCols = initAsCols(values);
   }
 
-  private static MatrixCellValue[] lexicalRowOrder(MatrixCellValue[] values) {
+  private static MatrixCellValue[] lexicalOrder(MatrixCellValue[] values, boolean isRowFocused) {
     MatrixCellValue[] res = Arrays.copyOf(values, values.length);
 
     Arrays.sort(res, (cell1, cell2) -> {
       int cmp = Integer.compare(cell1.row, cell2.row);
       if (cmp == 0)
-        return Integer.compare(cell1.column, cell2.column);
-      else
-        return cmp;
+        cmp = Integer.compare(cell1.column, cell2.column);
+      return cmp * (isRowFocused ? 1 : -1);
     });
 
     return res;
   }
 
-  private static MatrixCellValue[] lexicalColOrder(MatrixCellValue[] values) {
-    MatrixCellValue[] res = Arrays.copyOf(values, values.length);
-
-    Arrays.sort(res, (cell1, cell2) -> {
-      int cmp = Integer.compare(cell1.column, cell2.column);
-      if (cmp == 0)
-        return Integer.compare(cell1.row, cell2.row);
-      else
-        return cmp;
-    });
-
-    return res;
-  }
-
-  /**
-   * Treats two rows as vectors and adds their values. Assumes that rows are sorted by column number of cells.
-   *
-   * @param row1
-   * @param row2
-   * @return
-   */
   public static LinkedList<MatrixCellValue> addRows(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2) {
     return arithmeticRowOperator(row1, row2, false);
   }
@@ -94,9 +72,10 @@ public class IrregularValues {
 
   public static LinkedList<MatrixCellValue> mergeCells(LinkedList<MatrixCellValue> list) {
     LinkedList<MatrixCellValue> res = new LinkedList<>();
-    MatrixCellValue[] sorted = lexicalRowOrder(list.toArray(MatrixCellValue[]::new));
+    MatrixCellValue[] sorted = lexicalOrder(list.toArray(MatrixCellValue[]::new), true);
     MatrixCellValue prev = null;
     double sum = 0;
+
     for (MatrixCellValue cell : sorted) {
       if (prev == null)
         sum = cell.value;
@@ -108,49 +87,31 @@ public class IrregularValues {
       }
       prev = cell;
     }
+
     if (prev != null)
       res.add(new MatrixCellValue(prev.row, prev.column, sum));
 
     return res;
   }
 
-  /**
-   * @param values array of cells representing a matrix.
-   * @return List of lists of MatrixCellValue elements where first list level
-   * represents matrix rows and second columns.
-   */
   private LinkedList<LinkedList<MatrixCellValue>> initAsRows(MatrixCellValue[] values) {
-    MatrixCellValue[] sorted = lexicalRowOrder(values);
-    LinkedList<LinkedList<MatrixCellValue>> res = new LinkedList<>();
-    int row = -1;
-    MatrixCellValue prev = null;
-    for (MatrixCellValue value : sorted) {
-      assert !value.equals(prev);
-      if (value.row > row) {
-        res.add(new LinkedList<>());
-        row++;
-      }
-      res.getLast().add(value);
-      prev = value;
-    }
-    return res;
+    return initAs(values, true);
   }
 
-  /**
-   * @param values array of cells representing a matrix.
-   * @return List of lists of MatrixCellValue elements where first list level
-   * represents matrix rows and second columns.
-   */
   private LinkedList<LinkedList<MatrixCellValue>> initAsCols(MatrixCellValue[] values) {
-    MatrixCellValue[] sorted = lexicalColOrder(values);
+    return initAs(values, false);
+  }
+
+  private LinkedList<LinkedList<MatrixCellValue>> initAs(MatrixCellValue[] values, boolean isRowFocued) {
+    MatrixCellValue[] sorted = lexicalOrder(values, isRowFocued);
     LinkedList<LinkedList<MatrixCellValue>> res = new LinkedList<>();
-    int col = -1;
+    int i = -1;
     MatrixCellValue prev = null;
     for (MatrixCellValue value : sorted) {
       assert !value.equals(prev);
-      if (value.column > col) {
+      if ((isRowFocued ? value.row : value.column) > i) {
         res.add(new LinkedList<>());
-        col++;
+        i++;
       }
       res.getLast().add(value);
       prev = value;

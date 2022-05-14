@@ -59,14 +59,6 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
 
   protected abstract int choose(int row, int column);
 
-  public double getColumn(int column) {
-    return 0;
-  }
-
-  public double getRow(int row) {
-    return 0;
-  }
-
   protected abstract int periods();
 
   public abstract String matrixType();
