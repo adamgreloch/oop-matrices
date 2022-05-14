@@ -110,7 +110,17 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix plusIrregular(IrregularMatrix other) {
-    return null;
+    LinkedList<LinkedList<MatrixCellValue>> toAdd = new LinkedList<>(other.values.getValuesColRow());
+    LinkedList<MatrixCellValue> res = new LinkedList<>();
+    for (LinkedList<MatrixCellValue> row : this.values.getValuesColRow()) {
+      if (row.peek() != null && toAdd.peek() != null && toAdd.peek().peek() != null) {
+        if (row.peek().row == toAdd.peek().peek().row)
+          res.addAll(IrregularValues.addRows(row, toAdd.poll()));
+      }
+      else
+        res.addAll(row);
+    }
+    return new IrregularMatrix(this.shape(), res.toArray(MatrixCellValue[]::new));
   }
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
