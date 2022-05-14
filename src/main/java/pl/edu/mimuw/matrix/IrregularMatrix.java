@@ -60,6 +60,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public double get(int row, int column) {
+    this.shape().assertInShape(row, column);
     MatrixCellValue res = this.values.get(row, column);
     if (res == null) return 0;
     return res.value;
