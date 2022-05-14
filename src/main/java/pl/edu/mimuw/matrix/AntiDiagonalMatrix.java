@@ -18,7 +18,7 @@ public class AntiDiagonalMatrix extends SkewTableMatrix {
     return index;
   }
 
-  public String sparseType() {
+  public String matrixType() {
     return "antiDiagonal";
   }
 }

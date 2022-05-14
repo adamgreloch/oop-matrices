@@ -21,7 +21,7 @@ public class ColumnMatrix extends PeriodicTableMatrix {
     return 0;
   }
 
-  public String sparseType() {
+  public String matrixType() {
     return "column";
   }
 }

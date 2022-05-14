@@ -23,10 +23,4 @@ public abstract class SparseMatrix extends DoubleMatrix implements IDoubleMatrix
   public IDoubleMatrix minus(double scalar) {
     return this.plus(-scalar);
   }
-
-  public abstract String sparseType();
-
-  public boolean typeEquals(SparseMatrix other) {
-    return this.sparseType().equals(other.sparseType());
-  }
 }

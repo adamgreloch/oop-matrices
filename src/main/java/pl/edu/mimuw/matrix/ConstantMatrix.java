@@ -75,7 +75,7 @@ public class ConstantMatrix extends SparseMatrix {
     return value * shape().columns;
   }
 
-  public String sparseType() {
+  public String matrixType() {
     return "constant";
   }
 

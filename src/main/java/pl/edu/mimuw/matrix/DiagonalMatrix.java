@@ -22,7 +22,7 @@ public class DiagonalMatrix extends SkewTableMatrix {
     return index;
   }
 
-  public String sparseType() {
+  public String matrixType() {
     return "diagonal";
   }
 }

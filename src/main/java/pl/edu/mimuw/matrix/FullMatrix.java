@@ -146,4 +146,8 @@ public class FullMatrix extends DoubleMatrix {
       sum += Math.abs(this.get(row, i));
     return sum;
   }
+
+  public String matrixType() {
+    return "full";
+  }
 }

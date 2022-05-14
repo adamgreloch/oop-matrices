@@ -67,5 +67,5 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
     return 0;
   }
 
-  public abstract String sparseType();
+  public abstract String matrixType();
 }

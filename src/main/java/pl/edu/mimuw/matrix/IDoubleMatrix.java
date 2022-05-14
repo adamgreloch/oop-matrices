@@ -44,7 +44,13 @@ public interface IDoubleMatrix {
 
   IDoubleMatrix lHMinusFull(FullMatrix other);
 
+  IDoubleMatrix rHTimesIrregular(IrregularMatrix other);
+
   double getColumn(int column);
 
   double getRow(int row);
+
+  String matrixType();
+
+  boolean typeEquals(IDoubleMatrix other);
 }
