@@ -19,12 +19,12 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
 
   public abstract OneTableMatrix newMatrix(double[] newValues);
 
-  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isReduction) {
+  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction) {
     if (this.typeEquals(other)) {
       double[] newValues = Arrays.copyOf(this.values, bound);
 
       for (int i = 0; i < bound; i++)
-        newValues[i] = other.get(i, 0) + newValues[i] * (isReduction ? -1 : 1);
+        newValues[i] = other.get(i, 0) + newValues[i] * (isSubtraction ? -1 : 1);
 
       return this.newMatrix(newValues);
     }
@@ -32,7 +32,7 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
 
     for (int i = 0; i < bound; i++)
       for (int j = 0; j < bound; j++)
-        newValues[i][j] += this.values[choose(i, j)] * (isReduction ? -1 : 1);
+        newValues[i][j] += this.values[choose(i, j)] * (isSubtraction ? -1 : 1);
 
     return new FullMatrix(newValues);
   }

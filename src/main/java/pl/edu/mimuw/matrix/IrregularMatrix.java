@@ -110,12 +110,24 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix plusIrregular(IrregularMatrix other) {
-    LinkedList<LinkedList<MatrixCellValue>> toAdd = new LinkedList<>(other.values.getValuesColRow());
+    return this.arithmeticIrregularOperator(other, false);
+  }
+
+  public IDoubleMatrix lHMinusIrregular(IrregularMatrix other) {
+    return this.arithmeticIrregularOperator(other, true);
+  }
+
+  private IDoubleMatrix arithmeticIrregularOperator(IrregularMatrix other, boolean isLHReduction) {
+    LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesColRow());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
     for (LinkedList<MatrixCellValue> row : this.values.getValuesColRow()) {
-      if (row.peek() != null && toAdd.peek() != null && toAdd.peek().peek() != null) {
-        if (row.peek().row == toAdd.peek().peek().row)
-          res.addAll(IrregularValues.addRows(row, toAdd.poll()));
+      if (row.peek() != null && toOperate.peek() != null && toOperate.peek().peek() != null) {
+        if (row.peek().row == toOperate.peek().peek().row) {
+          if (isLHReduction)
+            res.addAll(IrregularValues.minusRows(row, toOperate.poll()));
+          else
+            res.addAll(IrregularValues.addRows(row, toOperate.poll()));
+        }
       }
       else
         res.addAll(row);
@@ -124,7 +136,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
-    return null;
+    return other.lHMinusIrregular(this);
   }
 
   public double getColumn(int column) {

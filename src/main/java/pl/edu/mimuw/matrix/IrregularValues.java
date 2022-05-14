@@ -145,6 +145,14 @@ public class IrregularValues {
    * @return
    */
   public static LinkedList<MatrixCellValue> addRows(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2) {
+    return arithmeticRowOperator(row1, row2, false);
+  }
+
+  public static LinkedList<MatrixCellValue> minusRows(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2) {
+    return arithmeticRowOperator(row1, row2, true);
+  }
+
+  private static LinkedList<MatrixCellValue> arithmeticRowOperator(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2, boolean isSubtraction) {
     LinkedList<MatrixCellValue> copy1 = new LinkedList<>(row1), copy2 = new LinkedList<>(row2);
     LinkedList<MatrixCellValue> longer = copy1, shorter = copy2;
     if (longer.size() < shorter.size()) {
@@ -159,7 +167,7 @@ public class IrregularValues {
     while (!longer.isEmpty()) {
       curr = longer.pop();
       if (shorter.peek() != null && curr.column == shorter.peek().column)
-        res.add(new MatrixCellValue(curr.row, curr.column, curr.value + shorter.pop().value));
+        res.add(new MatrixCellValue(curr.row, curr.column, curr.value + (isSubtraction ? -1 : 1) * shorter.pop().value));
       else
         res.add(curr);
     }

@@ -19,13 +19,13 @@ public class Vector extends OneTableMatrix {
 
   public OneTableMatrix newMatrix(double[] newValues) {
     return new Vector(this.shape(), this.values);
-  };
+  }
 
-  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isReduction) {
+  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction) {
       double[] newValues = Arrays.copyOf(this.values, bound);
 
       for (int i = 0; i < bound; i++)
-        newValues[i] = other.get(i, 0) + newValues[i] * (isReduction ? -1 : 1);
+        newValues[i] = other.get(i, 0) + newValues[i] * (isSubtraction ? -1 : 1);
 
       return this.newMatrix(newValues);
   }
