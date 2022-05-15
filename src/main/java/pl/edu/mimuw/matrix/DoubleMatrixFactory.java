@@ -15,7 +15,7 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix identity(int size) {
-    return new DiagonalMatrix(Shape.matrix(size, size), 1, size);
+    return new IdentityMatrix(Shape.matrix(size, size));
   }
 
   public static IDoubleMatrix diagonal(double... diagonalValues) {
@@ -33,6 +33,6 @@ public class DoubleMatrixFactory {
   }
 
   public static IDoubleMatrix zero(Shape shape) {
-    return new ConstantMatrix(shape, 0);
+    return new ZeroMatrix(shape);
   }
 }

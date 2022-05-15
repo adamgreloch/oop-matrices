@@ -1,6 +1,5 @@
 package pl.edu.mimuw.matrix;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class IrregularMatrix extends SparseMatrix {
@@ -51,7 +50,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   private IDoubleMatrix scalarOperator(double scalar, boolean mode) {
-    ArrayList<MatrixCellValue> res = new ArrayList<>();
+    LinkedList<MatrixCellValue> res = new LinkedList<>();
 
     for (MatrixCellValue cell : this.values.getValuesList())
       res.add(new MatrixCellValue(cell.row, cell.column, mode ? cell.value + scalar : cell.value * scalar));

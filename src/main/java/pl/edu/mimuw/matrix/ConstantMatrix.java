@@ -1,5 +1,7 @@
 package pl.edu.mimuw.matrix;
 
+import java.util.Arrays;
+
 public class ConstantMatrix extends SparseMatrix {
   private final double value;
 
@@ -18,6 +20,7 @@ public class ConstantMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix times(IDoubleMatrix other) {
+    Shape.assertProduct(this, other);
     /*
       Product of ConstantMatrix times any IDoubleMatrix is a ColumnMatrix
      */
@@ -57,7 +60,12 @@ public class ConstantMatrix extends SparseMatrix {
   }
 
   public double[][] data() {
-    return new double[this.shape().rows][this.shape().columns];
+    double[][] res = new double[this.shape().rows][];
+    for (int i = 0; i < this.shape().rows; i++) {
+      res[i] = new double[this.shape().columns];
+      Arrays.fill(res[i], this.value);
+    }
+    return res;
   }
 
   public double normOne() {
