@@ -61,4 +61,13 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
   public boolean typeEquals(IDoubleMatrix other) {
     return this.matrixType().equals(other.matrixType());
   }
+
+  public abstract String printMatrix();
+
+  protected abstract int getCellMaxWidth();
+
+  @Override
+  public String toString() {
+    return this.matrixType() + this.shape + "\n" + this.printMatrix();
+  }
 }

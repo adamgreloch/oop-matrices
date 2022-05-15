@@ -164,4 +164,25 @@ public class IrregularMatrix extends SparseMatrix {
   public String matrixType() {
     return "irregular";
   }
+
+  protected int getCellMaxWidth() {
+    return 0;
+  }
+
+  public String printMatrix() {
+    StringBuilder res = new StringBuilder();
+    MatrixCellValue prev = null;
+    for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
+      if (prev != null && row.peek() != null && prev.column + 1 < row.peek().column)
+        res.append("...\n".repeat(2));
+      for (MatrixCellValue cell : row) {
+        if (prev != null && prev.row + 1 < cell.row)
+          res.append(" ".repeat(10)).append("... ");
+        res.append(cell).append(" ");
+        prev = cell;
+      }
+      res.append("\n");
+    }
+    return res.toString();
+  }
 }

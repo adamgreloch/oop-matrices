@@ -73,4 +73,22 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
   }
 
   public abstract String matrixType();
+
+  public String printMatrix() {
+    StringBuilder res = new StringBuilder();
+    int m = this.shape().rows, n = this.shape().columns;
+    int maxLength = getCellMaxWidth() + 1;
+
+    for (int i = 0; i < m; i++) {
+      res.append("| ");
+      for (int j = 0; j < n; j++) {
+        if (Math.abs(indexRow(i) - j) < 2)
+          res.append(String.format("%-" + maxLength + ".1f ", get(i, j)));
+        else if (Math.abs(indexRow(i) - j) == 2) res.append("...").append(" ".repeat(Math.max(1, maxLength - 2)));
+        else res.append(" ".repeat(maxLength + 1));
+      }
+      res.append("|\n");
+    }
+    return res.toString();
+  }
 }

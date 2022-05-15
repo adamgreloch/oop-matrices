@@ -84,8 +84,11 @@ public class ConstantMatrix extends SparseMatrix {
     return "constant";
   }
 
-  @Override
-  public String toString() {
-    return "ConstantMatrix " + this.shape() + ": every cell = " + this.value;
+  protected int getCellMaxWidth() {
+    return 0;
+  }
+
+  public String printMatrix() {
+    return "| every cell = " + this.value + " |\n";
   }
 }

@@ -8,7 +8,7 @@ public abstract class OneTableMatrix extends SparseMatrix {
 
   public OneTableMatrix(Shape shape, double[] values, int bound) {
     super(shape);
-    this.values = Arrays.copyOf(values, values.length);
+    this.values = Arrays.copyOf(values, bound);
     this.bound = bound;
   }
 
@@ -65,5 +65,12 @@ public abstract class OneTableMatrix extends SparseMatrix {
     for (int i = 0; i < bound; i++)
       sum += Math.pow(this.values[i], 2);
     return Math.sqrt(sum);
+  }
+
+  protected int getCellMaxWidth() {
+    int max = 0;
+    for (int i = 0; i < bound; i++)
+      max = Math.max(Double.toString(this.values[i]).length(), max);
+    return max;
   }
 }

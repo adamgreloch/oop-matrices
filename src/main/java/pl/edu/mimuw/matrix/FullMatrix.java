@@ -136,4 +136,25 @@ public class FullMatrix extends DoubleMatrix {
   public String matrixType() {
     return "full";
   }
+
+  protected int getCellMaxWidth() {
+    int max = 0;
+    for (int i = 0; i < this.shape().rows; i++)
+      for (int j = 0; j < this.shape().columns; j++)
+        max = Math.max(Double.toString(this.values[i][j]).length(), max);
+    return max;
+  }
+
+  public String printMatrix() {
+    StringBuilder res = new StringBuilder();
+    int maxLength = getCellMaxWidth();
+
+    for (int i = 0; i < this.shape().rows; i++) {
+      res.append("| ");
+      for (int j = 0; j < this.shape().columns; j++)
+        res.append(String.format("%-" + maxLength + ".1f ", this.values[i][j]));
+      res.append("|\n");
+    }
+    return res.toString();
+  }
 }
