@@ -49,4 +49,9 @@ public final class Shape {
   public int hashCode() {
     return Objects.hash(rows, columns);
   }
+
+  @Override
+  public String toString() {
+    return "(" + rows + " x " + columns + ")";
+  }
 }

@@ -39,11 +39,11 @@ public class ConstantMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    return null;
+    return other.minus(this.value);
   }
 
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
-    return null;
+    return other.times(-1).plus(this.value);
   }
 
   public IDoubleMatrix times(double scalar) {
@@ -82,5 +82,10 @@ public class ConstantMatrix extends SparseMatrix {
 
   public String matrixType() {
     return "constant";
+  }
+
+  @Override
+  public String toString() {
+    return "ConstantMatrix " + this.shape() + ": every cell = " + this.value;
   }
 }
