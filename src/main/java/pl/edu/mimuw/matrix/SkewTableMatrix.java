@@ -72,6 +72,17 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
     return new FullMatrix(newValues);
   }
 
+  public double normOne() {
+    return normInfinity();
+  }
+
+  public double normInfinity() {
+    double max = 0;
+    for (int i = 0; i < bound; i++)
+      max = Math.max(max, Math.abs(this.values[i]));
+    return max;
+  }
+
   public abstract String matrixType();
 
   public String printMatrix() {
