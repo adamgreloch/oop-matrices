@@ -100,7 +100,7 @@ public class IrregularMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix times(IDoubleMatrix other) {
-    Shape.assertProduct(this, other);
+    DoubleMatrix.assertProduct(this, other);
     return other.rHTimesIrregular(this);
   }
 
@@ -124,7 +124,7 @@ public class IrregularMatrix extends SparseMatrix {
 
     res = IrregularValues.mergeCells(res);
 
-    return new IrregularMatrix(Shape.product(other, this), res.toArray(MatrixCellValue[]::new));
+    return new IrregularMatrix(DoubleMatrix.product(other, this), res.toArray(MatrixCellValue[]::new));
   }
 
   public IDoubleMatrix plusSparse(SparseMatrix other) {

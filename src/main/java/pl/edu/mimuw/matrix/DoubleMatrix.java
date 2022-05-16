@@ -7,6 +7,15 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
     this.shape = shape;
   }
 
+  public static Shape product(IDoubleMatrix A, IDoubleMatrix B) {
+    DoubleMatrix.assertProduct(A, B);
+    return Shape.matrix(A.shape().rows, B.shape().columns);
+  }
+
+  public static void assertProduct(IDoubleMatrix A, IDoubleMatrix B) {
+    assert A.shape().columns == B.shape().rows;
+  }
+
   public IDoubleMatrix times(IDoubleMatrix other) {
     return dotProduct(this, other);
   }
@@ -16,7 +25,7 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
   }
 
   private IDoubleMatrix dotProduct(IDoubleMatrix a, IDoubleMatrix b) {
-    Shape.assertProduct(a, b);
+    DoubleMatrix.assertProduct(a, b);
     int m = a.shape().rows, n = b.shape().columns;
     double[][] res = new double[m][n];
 
@@ -68,6 +77,6 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
 
   @Override
   public String toString() {
-    return this.matrixType() + this.shape + "\n" + this.printMatrix();
+    return this.matrixType() + "(" + this.shape.rows + "x" + this.shape.columns + ")\n" + this.printMatrix();
   }
 }

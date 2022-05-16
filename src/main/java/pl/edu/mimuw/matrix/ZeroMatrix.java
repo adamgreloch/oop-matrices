@@ -18,7 +18,7 @@ public class ZeroMatrix extends ConstantMatrix {
 
   @Override
   public IDoubleMatrix times(IDoubleMatrix other) {
-    return new ZeroMatrix(Shape.product(other, this));
+    return new ZeroMatrix(DoubleMatrix.product(other, this));
   }
 
   @Override

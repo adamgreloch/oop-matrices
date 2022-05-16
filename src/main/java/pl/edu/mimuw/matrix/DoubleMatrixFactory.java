@@ -35,4 +35,14 @@ public class DoubleMatrixFactory {
   public static IDoubleMatrix zero(Shape shape) {
     return new ZeroMatrix(shape);
   }
+
+  public static IDoubleMatrix column(int columns, double... columnValues) {
+    int n = columnValues.length;
+    return new ColumnMatrix(Shape.matrix(n, columns), columnValues);
+  }
+
+  public static IDoubleMatrix row(int rows, double... rowValues) {
+    int m = rowValues.length;
+    return new ColumnMatrix(Shape.matrix(rows, m), rowValues);
+  }
 }

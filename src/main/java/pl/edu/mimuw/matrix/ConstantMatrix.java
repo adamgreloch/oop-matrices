@@ -20,7 +20,7 @@ public class ConstantMatrix extends SparseMatrix {
 
   @Override
   public IDoubleMatrix times(IDoubleMatrix other) {
-    Shape.assertProduct(this, other);
+    DoubleMatrix.assertProduct(this, other);
     /*
       Product of ConstantMatrix times any IDoubleMatrix is a ColumnMatrix
      */
@@ -34,7 +34,7 @@ public class ConstantMatrix extends SparseMatrix {
       row = 0;
     }
 
-    return new ColumnMatrix(Shape.product(other, this), rows);
+    return new ColumnMatrix(DoubleMatrix.product(other, this), rows);
   }
 
   @Override

@@ -21,15 +21,6 @@ public final class Shape {
     return new Shape(rows, columns);
   }
 
-  public static Shape product(IDoubleMatrix A, IDoubleMatrix B) {
-    Shape.assertProduct(A, B);
-    return new Shape(A.shape().rows, B.shape().columns);
-  }
-
-  public static void assertProduct(IDoubleMatrix A, IDoubleMatrix B) {
-    assert A.shape().columns == B.shape().rows;
-  }
-
   void assertInShape(int row, int column) {
     assert row >= 0;
     assert row < rows;
@@ -48,10 +39,5 @@ public final class Shape {
   @Override
   public int hashCode() {
     return Objects.hash(rows, columns);
-  }
-
-  @Override
-  public String toString() {
-    return "(" + rows + " x " + columns + ")";
   }
 }
