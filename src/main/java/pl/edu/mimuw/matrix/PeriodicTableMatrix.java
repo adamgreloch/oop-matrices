@@ -3,6 +3,7 @@ package pl.edu.mimuw.matrix;
 import java.util.Arrays;
 
 public abstract class PeriodicTableMatrix extends OneTableMatrix {
+
   public PeriodicTableMatrix(Shape shape, double[] periodicValues, int bound) {
     super(shape, periodicValues, bound);
   }

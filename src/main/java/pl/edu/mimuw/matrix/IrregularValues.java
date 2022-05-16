@@ -32,15 +32,19 @@ public class IrregularValues {
     return res;
   }
 
-  public static LinkedList<MatrixCellValue> addRows(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2) {
+  public static LinkedList<MatrixCellValue> addRows(LinkedList<MatrixCellValue> row1,
+                                                    LinkedList<MatrixCellValue> row2) {
     return arithmeticRowOperator(row1, row2, false);
   }
 
-  public static LinkedList<MatrixCellValue> minusRows(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2) {
+  public static LinkedList<MatrixCellValue> minusRows(LinkedList<MatrixCellValue> row1,
+                                                      LinkedList<MatrixCellValue> row2) {
     return arithmeticRowOperator(row1, row2, true);
   }
 
-  private static LinkedList<MatrixCellValue> arithmeticRowOperator(LinkedList<MatrixCellValue> row1, LinkedList<MatrixCellValue> row2, boolean isSubtraction) {
+  private static LinkedList<MatrixCellValue> arithmeticRowOperator(LinkedList<MatrixCellValue> row1,
+                                                                   LinkedList<MatrixCellValue> row2,
+                                                                   boolean isSubtraction) {
     LinkedList<MatrixCellValue> longer = new LinkedList<>(row1), shorter = new LinkedList<>(row2);
     if (longer.size() < shorter.size()) {
       LinkedList<MatrixCellValue> buf = longer;
@@ -54,7 +58,8 @@ public class IrregularValues {
     while (!longer.isEmpty()) {
       curr = longer.pop();
       if (shorter.peek() != null && curr.column == shorter.peek().column)
-        res.add(new MatrixCellValue(curr.row, curr.column, curr.value + (isSubtraction ? -1 : 1) * shorter.pop().value));
+        res.add(new MatrixCellValue(curr.row, curr.column,
+          curr.value + (isSubtraction ? -1 : 1) * shorter.pop().value));
       else
         res.add(curr);
     }

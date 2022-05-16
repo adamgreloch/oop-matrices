@@ -3,7 +3,6 @@ package pl.edu.mimuw.matrix;
 import java.util.Objects;
 
 public final class MatrixCellValue {
-
   public final int row;
   public final int column;
   public final double value;

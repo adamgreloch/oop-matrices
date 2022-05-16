@@ -1,6 +1,7 @@
 package pl.edu.mimuw.matrix;
 
 public class Vector extends FullMatrix {
+
   public Vector(double[] values) {
     super(convertTo2D(values));
   }

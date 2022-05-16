@@ -1,6 +1,7 @@
 package pl.edu.mimuw.matrix;
 
 public class ColumnMatrix extends PeriodicTableMatrix {
+
   public ColumnMatrix(Shape shape, double[] columnValues) {
     super(shape, columnValues, shape.rows);
   }
