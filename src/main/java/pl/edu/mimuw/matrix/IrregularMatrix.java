@@ -142,9 +142,11 @@ public class IrregularMatrix extends SparseMatrix {
   private IDoubleMatrix arithmeticIrregularOperator(IrregularMatrix other, boolean isLHReduction) {
     LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesAsRows());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
+    MatrixCellValue peeked;
     for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
-      if (row.peek() != null && toOperate.peek() != null && toOperate.peek().peek() != null) {
-        if (row.peek().row == toOperate.peek().peek().row) {
+      if (row.peek() != null && toOperate.peek() != null) {
+        peeked = toOperate.peek().peek();
+        if (peeked != null && row.peek().row == peeked.row) {
           if (isLHReduction)
             res.addAll(IrregularValues.minusRows(row, toOperate.poll()));
           else
