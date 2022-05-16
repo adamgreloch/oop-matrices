@@ -1,6 +1,6 @@
 package pl.edu.mimuw.matrix;
 
-public abstract class SparseMatrix extends DoubleMatrix implements IDoubleMatrix {
+public abstract class SparseMatrix extends DoubleMatrix {
 
   public SparseMatrix(Shape shape) {
     super(shape);

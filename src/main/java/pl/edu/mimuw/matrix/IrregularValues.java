@@ -12,9 +12,9 @@ public class IrregularValues {
   public IrregularValues(MatrixCellValue... values) {
     this.valuesList = new LinkedList<>(List.of(values));
 
-    /* These two structures represent the same matrix, but the order of
-    cells is mutually inverted. That way, row-wise write out of cells
-    costs approximately the same as its column-wise counterpart. */
+    /* Keeping the same matrix as two differently organized lists of lists
+    allow row-wise write out of cells to cost approximately the same as
+    its column-wise counterpart. */
     this.valuesAsRows = initAsRows(values);
     this.valuesAsCols = initAsCols(values);
   }
@@ -119,12 +119,6 @@ public class IrregularValues {
     return res;
   }
 
-  /**
-   * Finds a cell at given coordinates
-   *
-   * @return MatrixCellValue in (row, column) or null if such
-   * non-zero cell doesn't exist.
-   */
   public MatrixCellValue get(int i, int j) {
     for (LinkedList<MatrixCellValue> row : valuesAsRows)
       if (row.peekFirst() != null && row.peekFirst().row == i)
@@ -135,18 +129,18 @@ public class IrregularValues {
   }
 
   LinkedList<MatrixCellValue> getValuesList() {
-    return this.valuesList; // TODO non-copy intended?
+    return this.valuesList;
   }
 
   LinkedList<LinkedList<MatrixCellValue>> getValuesAsRows() {
-    return this.valuesAsRows; // TODO non-copy intended?
+    return this.valuesAsRows;
   }
 
   LinkedList<LinkedList<MatrixCellValue>> getValuesAsCols() {
-    return this.valuesAsCols; // TODO non-copy intended?
+    return this.valuesAsCols;
   }
 
-  LinkedList<MatrixCellValue> getRow(int index) {
+  public LinkedList<MatrixCellValue> getRow(int index) {
     for (LinkedList<MatrixCellValue> row : this.valuesAsRows)
       if (row.peek() != null && row.peek().row == index)
         return row;
