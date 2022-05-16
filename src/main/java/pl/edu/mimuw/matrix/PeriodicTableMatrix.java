@@ -24,6 +24,15 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
     return res;
   }
 
+  public IDoubleMatrix plus(double scalar) {
+    double[] res = Arrays.copyOf(this.values, bound);
+
+    for (int i = 0; i < bound; i++)
+      res[i] += scalar;
+
+    return this.newMatrix(res);
+  }
+
   public abstract OneTableMatrix newMatrix(double[] newValues);
 
   protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction) {

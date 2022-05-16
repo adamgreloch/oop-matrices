@@ -20,6 +20,18 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
       return 0;
   }
 
+  public IDoubleMatrix plus(double scalar) {
+    double[][] res = new double[this.shape().rows][];
+
+    for (int i = 0; i < bound; i++) {
+      res[indexRow(i)] = new double[this.shape().columns];
+      Arrays.fill(res[indexRow(i)], scalar);
+      res[indexRow(i)][indexColumn(i)] += this.values[i];
+    }
+
+    return new FullMatrix(res);
+  }
+
   public abstract OneTableMatrix newMatrix(double[] newValues);
 
   public double[][] data() {

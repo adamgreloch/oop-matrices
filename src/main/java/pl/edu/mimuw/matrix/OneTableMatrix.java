@@ -19,15 +19,6 @@ public abstract class OneTableMatrix extends SparseMatrix {
     Arrays.fill(this.values, value);
   }
 
-  public IDoubleMatrix plus(double scalar) {
-    double[] res = Arrays.copyOf(this.values, bound);
-
-    for (int i = 0; i < bound; i++)
-      res[i] += scalar;
-
-    return this.newMatrix(res);
-  }
-
   public IDoubleMatrix times(double scalar) {
     double[] res = Arrays.copyOf(this.values, bound);
 
