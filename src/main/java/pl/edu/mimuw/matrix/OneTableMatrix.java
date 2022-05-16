@@ -50,10 +50,7 @@ public abstract class OneTableMatrix extends SparseMatrix {
   }
 
   public double frobeniusNorm() {
-    double sum = 0;
-    for (int i = 0; i < bound; i++)
-      sum += Math.pow(this.values[i], 2);
-    return Math.sqrt(sum);
+    return Math.sqrt(Arrays.stream(this.values).map(v -> v * v).sum());
   }
 
   protected int getCellMaxWidth() {

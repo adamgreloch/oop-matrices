@@ -43,6 +43,6 @@ public class DoubleMatrixFactory {
 
   public static IDoubleMatrix row(int rows, double... rowValues) {
     int m = rowValues.length;
-    return new ColumnMatrix(Shape.matrix(rows, m), rowValues);
+    return new RowMatrix(Shape.matrix(rows, m), rowValues);
   }
 }

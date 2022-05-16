@@ -71,7 +71,7 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   public abstract String matrixType();
 
   protected double maxOneAbsValueProduct() {
-    return Math.abs(Arrays.stream(this.values).max().orElseThrow()) * periods();
+    return Math.abs(Arrays.stream(this.values).map(Math::abs).max().orElseThrow()) * periods();
   }
 
   protected double absTableSum() {
