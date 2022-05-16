@@ -49,19 +49,19 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
 
   public abstract int indexColumn(int index);
 
-  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction) {
+  protected IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isRHSubtraction) {
     if (this.typeEquals(other)) {
       double[] newValues = Arrays.copyOf(this.values, bound);
 
       for (int i = 0; i < bound; i++)
-        newValues[i] = other.get(indexRow(i), i) + newValues[i] * (isSubtraction ? -1 : 1);
+        newValues[i] = other.get(indexRow(i), i) + newValues[i] * (isRHSubtraction ? -1 : 1);
 
       return this.newMatrix(newValues);
     }
     double[][] newValues = other.data();
 
     for (int i = 0; i < bound; i++)
-      newValues[indexRow(i)][i] += this.values[i] * (isSubtraction ? -1 : 1);
+      newValues[indexRow(i)][i] += this.values[i] * (isRHSubtraction ? -1 : 1);
 
     return new FullMatrix(newValues);
   }

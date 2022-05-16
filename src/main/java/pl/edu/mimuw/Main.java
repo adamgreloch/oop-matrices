@@ -1,4 +1,5 @@
-/* Adam Greloch
+/*
+ * @author Adam Greloch
  * JetBrains IntelliJ IDEA 2022.1 (Ultimate Edition)
  * Build #IU-221.5080.210, built on April 12, 2022
  */
@@ -21,11 +22,12 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    IDoubleMatrix constant = new ConstantMatrix(Shape.matrix(10, 10), 2);
-    IDoubleMatrix zero = DoubleMatrixFactory.zero(Shape.matrix(10, 10));
-    IDoubleMatrix column = new ColumnMatrix(Shape.matrix(10, 10), new double[]{1, 2136, 3, 4, 5, 10, 2, 2, 5, 6});
-    IDoubleMatrix row = new RowMatrix(Shape.matrix(10, 10), new double[]{1, 2000, 3, 4, 5});
-    IDoubleMatrix diagonal = new DiagonalMatrix(Shape.matrix(10, 10), new double[]{1, 2000, 3, 4, 5});
+    IDoubleMatrix constant = constant(Shape.matrix(10, 10), 2);
+    IDoubleMatrix zero = zero(Shape.matrix(10, 10));
+    IDoubleMatrix column = column(10, 1, 2136, 3, 4, 5, 10, 2, 2, 5, 6);
+    IDoubleMatrix row = row(10, 1, 2000, 3, 4, 5, 13, 13, 13, 13, 13);
+    IDoubleMatrix diagonal = diagonal(1, 2000, 3, 4, 5, 5, 6, 7, 8, 10);
+    IDoubleMatrix antiDiagonal = antiDiagonal(21, 21, 31, 14, 25, 10, 10, 11, 42, 3);
     IDoubleMatrix vector = vector(1, 3, 4, 1, 1, 2, 3, 5, 10, 2000);
     IDoubleMatrix SPARSE_3X2 = sparse(matrix(10, 10),
       cell(0, 0, 1),
@@ -48,10 +50,12 @@ public class Main {
     demo(sparse, "Example sparse matrix");
     demo(sparse.times(SPARSE_3X2), "My sparse times SPARSE_3X2");
     demo(SPARSE_3X2.times(vector), "Transforming a vector with SPARSE_3X2");
-    demo(column.times(row), "Column times Row matrices");
+    demo(column.times(row), "Column times Row");
     demo(constant.times(sparse), "Look! Constant times Sparse is a RowMatrix!");
     demo(diagonal.plus(42), "Adding 42 to a DiagonalMatrix gives lots of 42's");
     demo(column.plus(42), "But adding 42 to my ColumnMatrix gives only one 42. Can you spot it?");
+    demo(diagonal, "DiagonalMatrix");
+    demo(antiDiagonal, "AntiDiagonalMatrix");
     demo(sparse.minus(sparse), "We can subtract the same matrix to get void and darkness again");
     demo(sparse.minus(sparse).minus(sparse), "Subtracting same matrix twice from itself gives negative void and darkness");
     demo(identity(10)

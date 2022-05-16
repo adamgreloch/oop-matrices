@@ -66,7 +66,6 @@ public class FullMatrix extends DoubleMatrix {
 
     for (int i = 0; i < this.shape().columns; i++)
       max = Math.max(this.getAbsColumn(i), max);
-
     return max;
   }
 
@@ -75,18 +74,16 @@ public class FullMatrix extends DoubleMatrix {
 
     for (int i = 0; i < this.shape().rows; i++)
       max = Math.max(this.getAbsRow(i), max);
-
     return max;
   }
 
   public double frobeniusNorm() {
-    double frob = 0;
+    double res = 0;
 
     for (int i = 0; i < this.shape().rows; i++)
       for (int j = 0; j < this.shape().columns; j++)
-        frob += Math.pow(this.get(i, j), 2);
-
-    return Math.sqrt(frob);
+        res += Math.pow(this.get(i, j), 2);
+    return Math.sqrt(res);
   }
 
   public IDoubleMatrix plusSparse(SparseMatrix other) {
@@ -141,7 +138,7 @@ public class FullMatrix extends DoubleMatrix {
     int max = 0;
     for (int i = 0; i < this.shape().rows; i++)
       for (int j = 0; j < this.shape().columns; j++)
-        max = Math.max(Double.toString(this.values[i][j]).length(), max);
+        max = Math.max(String.format("%.1f", this.values[i][j]).length(), max);
     return max;
   }
 

@@ -30,7 +30,7 @@ public abstract class OneTableMatrix extends SparseMatrix {
 
   public abstract OneTableMatrix newMatrix(double[] newValues);
 
-  protected abstract IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isSubtraction);
+  protected abstract IDoubleMatrix arithmeticOperatorSparse(SparseMatrix other, boolean isRHSubtraction);
 
   public IDoubleMatrix plusSparse(SparseMatrix other) {
     return this.arithmeticOperatorSparse(other, false);
