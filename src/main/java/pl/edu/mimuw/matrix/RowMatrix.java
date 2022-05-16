@@ -13,6 +13,14 @@ public class RowMatrix extends PeriodicTableMatrix {
     return column;
   }
 
+  public double normOne() {
+    return this.maxOneAbsValueProduct();
+  }
+
+  public double normInfinity() {
+    return this.absTableSum();
+  }
+
   protected int periods() {
     return shape().rows;
   }

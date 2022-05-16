@@ -13,8 +13,14 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   }
 
   public double[][] data() {
-    // TODO
-    return new double[0][];
+    int m = this.shape().rows, n = this.shape().columns;
+    double[][] res = new double[m][];
+    for (int i = 0; i < m; i++) {
+      res[i] = new double[n];
+      for (int j = 0; j < n; j++)
+        res[i][j] = this.get(i, j);
+    }
+    return res;
   }
 
   public abstract OneTableMatrix newMatrix(double[] newValues);
@@ -30,8 +36,8 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
     }
     double[][] newValues = other.data();
 
-    for (int i = 0; i < bound; i++)
-      for (int j = 0; j < bound; j++)
+    for (int i = 0; i < this.shape().rows; i++)
+      for (int j = 0; j < this.shape().columns; j++)
         newValues[i][j] += this.values[choose(i, j)] * (isSubtraction ? -1 : 1);
 
     return new FullMatrix(newValues);
@@ -40,8 +46,8 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
     double[][] newValues = other.data();
 
-    for (int i = 0; i < bound; i++)
-      for (int j = 0; j < bound; j++)
+    for (int i = 0; i < this.shape().rows; i++)
+      for (int j = 0; j < this.shape().columns; j++)
         newValues[i][j] -= this.values[choose(i, j)];
 
     return new FullMatrix(newValues);
@@ -50,8 +56,8 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
     double[][] newValues = other.data();
 
-    for (int i = 0; i < bound; i++)
-      for (int j = 0; j < bound; j++)
+    for (int i = 0; i < this.shape().rows; i++)
+      for (int j = 0; j < this.shape().columns; j++)
         newValues[i][j] = this.values[choose(i, j)] - newValues[i][j];
 
     return new FullMatrix(newValues);
@@ -62,6 +68,14 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   protected abstract int periods();
 
   public abstract String matrixType();
+
+  protected double maxOneAbsValueProduct() {
+    return Math.abs(Arrays.stream(this.values).max().orElseThrow()) * periods();
+  }
+
+  protected double absTableSum() {
+    return Arrays.stream(this.values).map(Math::abs).sum();
+  }
 
   @Override
   public double frobeniusNorm() {
