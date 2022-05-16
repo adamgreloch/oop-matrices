@@ -14,22 +14,21 @@ public class IrregularMatrix extends SparseMatrix {
     this.values = new IrregularValues(values);
   }
 
-  public IDoubleMatrix plusFull(FullMatrix other) {
+  private IDoubleMatrix fullOperator(FullMatrix other, boolean isRHSubtraction) {
     double[][] res = other.data();
 
     for (MatrixCellValue cell : this.values.getValuesList())
-      res[cell.row][cell.column] += cell.value;
+      res[cell.row][cell.column] += cell.value * (isRHSubtraction ? -1 : 1);
 
     return new FullMatrix(res);
   }
 
+  public IDoubleMatrix plusFull(FullMatrix other) {
+    return fullOperator(other, false);
+  }
+
   public IDoubleMatrix rHMinusFull(FullMatrix other) {
-    double[][] res = other.data();
-
-    for (MatrixCellValue cell : this.values.getValuesList())
-      res[cell.row][cell.column] -= cell.value;
-
-    return new FullMatrix(res);
+    return fullOperator(other, true);
   }
 
   public IDoubleMatrix lHMinusFull(FullMatrix other) {
@@ -132,14 +131,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix plusIrregular(IrregularMatrix other) {
-    return this.arithmeticIrregularOperator(other, false);
-  }
-
-  public IDoubleMatrix lHMinusIrregular(IrregularMatrix other) {
-    return this.arithmeticIrregularOperator(other, true);
-  }
-
-  private IDoubleMatrix arithmeticIrregularOperator(IrregularMatrix other, boolean isLHReduction) {
+    if (this.values.getValuesList().isEmpty()) return other.times(-1);
     LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesAsRows());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
     MatrixCellValue peeked;
@@ -147,10 +139,7 @@ public class IrregularMatrix extends SparseMatrix {
       if (row.peek() != null && toOperate.peek() != null) {
         peeked = toOperate.peek().peek();
         if (peeked != null && row.peek().row == peeked.row) {
-          if (isLHReduction)
-            res.addAll(IrregularValues.minusRows(row, toOperate.poll()));
-          else
-            res.addAll(IrregularValues.addRows(row, toOperate.poll()));
+          res.addAll(IrregularValues.addRows(row, toOperate.poll()));
         }
       }
       else
@@ -160,7 +149,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix rHMinusSparse(SparseMatrix other) {
-    return other.lHMinusIrregular(this);
+    return other.plus(this.times(-1));
   }
 
   public String matrixType() {
@@ -172,18 +161,28 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public String printMatrix() {
+    if (this.values.getValuesList().isEmpty()) return "| every cell = 0.0 |\n";
+
     StringBuilder res = new StringBuilder();
     MatrixCellValue prev = null;
+    int currIndent = 0, rowDist = 0, colDist = 0;
     for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
-      if (prev != null && row.peek() != null && prev.column + 1 < row.peek().column)
-        res.append("...\n".repeat(2));
+      res.append("| ");
+      if (prev != null && row.peek() != null)
+        rowDist = row.peek().row - prev.row;
+      if (rowDist > 1)
+        res.append("... |\n| ".repeat(2));
       for (MatrixCellValue cell : row) {
-        if (prev != null && prev.row + 1 < cell.row)
-          res.append(" ".repeat(10)).append("... ");
+        if (prev != null && row.peek() != null)
+          colDist = row.peek().column - prev.column;
+        if (currIndent + colDist > 1) {
+          res.append(" ".repeat(5 * (currIndent + colDist))).append("... ");
+          currIndent += colDist;
+        }
         res.append(cell).append(" ");
         prev = cell;
       }
-      res.append("\n");
+      res.append("|\n");
     }
     return res.toString();
   }

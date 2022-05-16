@@ -55,10 +55,6 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
     return this.plusSparse(other);
   }
 
-  public IDoubleMatrix lHMinusIrregular(IrregularMatrix other) {
-    return this.minus(other);
-  }
-
   public Shape shape() {
     return this.shape;
   }

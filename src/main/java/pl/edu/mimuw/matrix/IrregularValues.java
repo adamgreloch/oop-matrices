@@ -62,6 +62,7 @@ public class IrregularValues {
           curr.value + (isSubtraction ? -1 : 1) * shorter.pop().value));
       else
         res.add(curr);
+      if (res.peek().value == 0) res.remove();
     }
 
     return res;
