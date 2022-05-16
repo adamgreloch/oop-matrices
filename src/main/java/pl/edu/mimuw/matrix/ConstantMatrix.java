@@ -22,19 +22,19 @@ public class ConstantMatrix extends SparseMatrix {
   public IDoubleMatrix times(IDoubleMatrix other) {
     DoubleMatrix.assertProduct(this, other);
     /*
-      Product of ConstantMatrix times any IDoubleMatrix is a ColumnMatrix
+      Product of ConstantMatrix times any IDoubleMatrix is a RowMatrix
      */
-    double[] rows = new double[this.shape().columns];
+    double[] rowValues = new double[this.shape().columns];
     double row = 0;
 
     for (int i = 0; i < this.shape().columns; i++) {
-      for (int j = 0; j < other.shape().columns; j++)
-        row += other.get(i, j);
-      rows[i] = row * this.value;
+      for (int k = 0; k < other.shape().rows; k++)
+        row += other.get(k, i);
+      rowValues[i] = row * this.value;
       row = 0;
     }
 
-    return new ColumnMatrix(DoubleMatrix.product(other, this), rows);
+    return new RowMatrix(DoubleMatrix.product(other, this), rowValues);
   }
 
   @Override

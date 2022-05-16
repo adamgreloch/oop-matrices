@@ -159,6 +159,60 @@ public class MatrixBinaryOperationTest {
     assertEquals(0, result.get(42, 42));
   }
 
+  @Test
+  void testConstantTimesSparse() {
+    final var l = DoubleMatrixFactory.constant(
+      matrix(3, 3), 3
+    );
+
+    final var r = DoubleMatrixFactory.sparse(
+      matrix(3, 3),
+      cell(0, 0, 2),
+      cell(2, 1, 1)
+    );
+
+    final var result = l.times(r);
+
+    for (int i = 0; i < 2; i++) {
+      assertEquals(6, result.get(i, 0));
+      assertEquals(3, result.get(i, 1));
+      assertEquals(0, result.get(i, 2));
+    }
+  }
+
+  @Test
+  void testColumnTimesRow() {
+    final var l = DoubleMatrixFactory.column(
+      3, 1, 2, 3
+    );
+
+    final var r = DoubleMatrixFactory.row(
+      3, 1, 2, 3, 4, 5
+    );
+
+    final var result = l.times(r);
+
+    for (int i = 0; i < 2; i++)
+      for (int j = 0; j < 5; j++)
+        assertEquals(3 * (i + 1) * (j + 1), result.get(i, j));
+  }
+
+  @Test
+  void testLinearTransformation() {
+    final var l = DoubleMatrixFactory.row(
+      4, 7, 3, 3, 1
+    );
+
+    final var r = DoubleMatrixFactory.vector(
+      1, 3, 3, 7
+    );
+
+    final var result = l.times(r);
+
+    for (int i = 0; i < 4; i++)
+      assertEquals(32, result.get(i, 0));
+  }
+
   @ParameterizedTest
   @ArgumentsSource(TestMatrixSameArgumentProvider.class)
   void testZeroMatrixTimes(IDoubleMatrix l, IDoubleMatrix r) {

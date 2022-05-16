@@ -45,4 +45,8 @@ public class DoubleMatrixFactory {
     int m = rowValues.length;
     return new RowMatrix(Shape.matrix(rows, m), rowValues);
   }
+
+  public static IDoubleMatrix constant(Shape shape, double value) {
+    return new ConstantMatrix(shape, value);
+  }
 }
