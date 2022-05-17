@@ -3,6 +3,13 @@ package pl.edu.mimuw.matrix;
 public abstract class DoubleMatrix implements IDoubleMatrix {
   private final Shape shape;
 
+  private double normOne;
+  private boolean normOneCalculated = false;
+  private double normInfinity;
+  private boolean normInfinityCalculated = false;
+  private double frobeniusNorm;
+  private boolean frobeniusNormCalculated = false;
+
   public DoubleMatrix(Shape shape) {
     this.shape = shape;
   }
@@ -66,6 +73,36 @@ public abstract class DoubleMatrix implements IDoubleMatrix {
   public boolean typeEquals(IDoubleMatrix other) {
     return this.matrixType().equals(other.matrixType());
   }
+
+  public double normOne() {
+    if (!this.normOneCalculated) {
+      this.normOne = calculateNormOne();
+      this.normOneCalculated = true;
+    }
+    return this.normOne;
+  }
+
+  public double normInfinity() {
+    if (!this.normInfinityCalculated) {
+      this.normInfinity = calculateNormInfinity();
+      this.normInfinityCalculated = true;
+    }
+    return this.normInfinity;
+  }
+
+  public double frobeniusNorm() {
+    if (!this.frobeniusNormCalculated) {
+      this.frobeniusNorm = calculateFrobeniusNorm();
+      this.frobeniusNormCalculated = true;
+    }
+    return this.frobeniusNorm;
+  }
+
+  protected abstract double calculateNormOne();
+
+  protected abstract double calculateNormInfinity();
+
+  protected abstract double calculateFrobeniusNorm();
 
   public abstract String printMatrix();
 

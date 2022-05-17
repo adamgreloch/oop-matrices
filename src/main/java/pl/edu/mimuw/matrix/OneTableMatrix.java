@@ -40,7 +40,7 @@ public abstract class OneTableMatrix extends SparseMatrix {
     return this.arithmeticOperatorSparse(other, true);
   }
 
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     return Math.sqrt(Arrays.stream(this.values).map(v -> v * v).sum());
   }
 

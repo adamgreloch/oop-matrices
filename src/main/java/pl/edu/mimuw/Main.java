@@ -60,10 +60,10 @@ public class Main {
     demo(sparse.minus(sparse), "We can subtract the same matrix to get void and darkness again");
     demo(sparse.minus(sparse).minus(sparse), "Subtracting same matrix twice from itself gives negative void and darkness");
     demo(identity(10)
-      .times(constant) .minus(sparse)
+      .times(constant).minus(sparse)
       .minus(diagonal).times(2)
       .minus(sparse)
-      .times(vector(1,2,3,4,5,6,7,8,9,10)
-      .times(row(1,9,9,9,9,1,1,1,1,2,5))), "Identity, Constant, Sparse, Vector and Row combined");
+      .times(vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        .times(row(1, 9, 9, 9, 9, 1, 1, 1, 1, 2, 5))), "Identity, Constant, Sparse, Vector and Row combined");
   }
 }

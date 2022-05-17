@@ -61,7 +61,7 @@ public class FullMatrix extends DoubleMatrix {
     return copy2DTable(this.values);
   }
 
-  public double normOne() {
+  protected double calculateNormOne() {
     double max = 0;
 
     for (int i = 0; i < this.shape().columns; i++)
@@ -69,7 +69,7 @@ public class FullMatrix extends DoubleMatrix {
     return max;
   }
 
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     double max = 0;
 
     for (int i = 0; i < this.shape().rows; i++)
@@ -77,7 +77,7 @@ public class FullMatrix extends DoubleMatrix {
     return max;
   }
 
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     double res = 0;
 
     for (int i = 0; i < this.shape().rows; i++)

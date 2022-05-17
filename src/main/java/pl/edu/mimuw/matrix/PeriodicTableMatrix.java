@@ -88,7 +88,7 @@ public abstract class PeriodicTableMatrix extends OneTableMatrix {
   }
 
   @Override
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     double sum = 0;
     for (int i = 0; i < bound; i++)
       sum += Math.pow(this.values[i], 2);

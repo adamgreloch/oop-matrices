@@ -56,17 +56,17 @@ public class ZeroMatrix extends ConstantMatrix {
   }
 
   @Override
-  public double normOne() {
+  protected double calculateNormOne() {
     return 0;
   }
 
   @Override
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     return 0;
   }
 
   @Override
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     return 0;
   }
 

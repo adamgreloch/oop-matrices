@@ -14,11 +14,11 @@ public class ColumnMatrix extends PeriodicTableMatrix {
     return row;
   }
 
-  public double normOne() {
+  protected double calculateNormOne() {
     return this.absTableSum();
   }
 
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     return this.maxOneAbsValueProduct();
   }
 

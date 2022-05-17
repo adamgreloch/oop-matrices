@@ -68,7 +68,7 @@ public class IrregularMatrix extends SparseMatrix {
     return this.values.generateMatrix(this.shape());
   }
 
-  public double normOne() {
+  protected double calculateNormOne() {
     double max = 0, sum = 0;
     for (LinkedList<MatrixCellValue> column : this.values.getValuesAsCols()) {
       for (MatrixCellValue cell : column)
@@ -79,7 +79,7 @@ public class IrregularMatrix extends SparseMatrix {
     return max;
   }
 
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     double max = 0, sum = 0;
     for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
       for (MatrixCellValue cell : row)
@@ -90,7 +90,7 @@ public class IrregularMatrix extends SparseMatrix {
     return max;
   }
 
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     double sum = 0;
     for (MatrixCellValue cell : this.values.getValuesList())
       sum += Math.pow(cell.value, 2);

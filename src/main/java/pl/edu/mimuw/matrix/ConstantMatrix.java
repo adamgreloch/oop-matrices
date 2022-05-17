@@ -68,15 +68,15 @@ public class ConstantMatrix extends SparseMatrix {
     return res;
   }
 
-  public double normOne() {
+  protected double calculateNormOne() {
     return Math.abs(this.value);
   }
 
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     return Math.abs(this.value);
   }
 
-  public double frobeniusNorm() {
+  protected double calculateFrobeniusNorm() {
     return Math.sqrt(Math.pow(this.value, 2) * this.shape().rows * this.shape().columns);
   }
 

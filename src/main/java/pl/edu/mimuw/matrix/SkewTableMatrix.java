@@ -84,11 +84,11 @@ public abstract class SkewTableMatrix extends OneTableMatrix {
     return new FullMatrix(newValues);
   }
 
-  public double normOne() {
-    return normInfinity();
+  protected double calculateNormOne() {
+    return calculateNormInfinity();
   }
 
-  public double normInfinity() {
+  protected double calculateNormInfinity() {
     double max = 0;
     for (int i = 0; i < bound; i++)
       max = Math.max(max, Math.abs(this.values[i]));
