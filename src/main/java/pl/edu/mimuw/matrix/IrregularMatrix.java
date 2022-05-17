@@ -114,10 +114,12 @@ public class IrregularMatrix extends SparseMatrix {
         if (rowToAdd != null)
           toSum.add(IrregularValues.multiplyRow(rowToAdd, cell.value, cell.row));
       }
+
       for (LinkedList<MatrixCellValue> element : toSum)
         sum = IrregularValues.addRows(sum, element);
-      toSum.clear();
+
       res.addAll(sum);
+      toSum.clear();
       sum.clear();
     }
 
@@ -135,16 +137,17 @@ public class IrregularMatrix extends SparseMatrix {
     LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesAsRows());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
     MatrixCellValue peeked;
+
     for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
       if (row.peek() != null && toOperate.peek() != null) {
         peeked = toOperate.peek().peek();
-        if (peeked != null && row.peek().row == peeked.row) {
+        if (peeked != null && row.peek().row == peeked.row)
           res.addAll(IrregularValues.addRows(row, toOperate.poll()));
-        }
       }
       else
         res.addAll(row);
     }
+
     return new IrregularMatrix(this.shape(), res.toArray(MatrixCellValue[]::new));
   }
 
@@ -162,10 +165,10 @@ public class IrregularMatrix extends SparseMatrix {
 
   public String printMatrix() {
     if (this.values.getValuesList().isEmpty()) return "| every cell = 0.0 |\n";
-
     StringBuilder res = new StringBuilder();
     MatrixCellValue prev = null;
     int currIndent = 0, rowDist = 0, colDist = 0;
+
     for (LinkedList<MatrixCellValue> row : this.values.getValuesAsRows()) {
       res.append("| ");
       if (prev != null && row.peek() != null)
@@ -184,6 +187,7 @@ public class IrregularMatrix extends SparseMatrix {
       }
       res.append("|\n");
     }
+
     return res.toString();
   }
 }
