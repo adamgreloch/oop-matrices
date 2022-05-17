@@ -131,7 +131,7 @@ public class IrregularMatrix extends SparseMatrix {
   }
 
   public IDoubleMatrix plusIrregular(IrregularMatrix other) {
-    if (this.values.getValuesList().isEmpty()) return other.times(-1);
+    if (this.values.getValuesList().isEmpty()) return other;
     LinkedList<LinkedList<MatrixCellValue>> toOperate = new LinkedList<>(other.values.getValuesAsRows());
     LinkedList<MatrixCellValue> res = new LinkedList<>();
     MatrixCellValue peeked;

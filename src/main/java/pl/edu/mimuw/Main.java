@@ -48,6 +48,7 @@ public class Main {
     demo(zero, "Trivial");
     demo(constant, "Less trivial but still");
     demo(sparse, "Example sparse matrix");
+    demo(column, "ColumnMatrix");
     demo(sparse.times(SPARSE_3X2), "My sparse times SPARSE_3X2");
     demo(SPARSE_3X2.times(vector), "Transforming a vector with SPARSE_3X2");
     demo(column.times(row), "Column times Row");
